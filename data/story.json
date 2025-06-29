@@ -1,0 +1,169 @@
+{
+  "scenes": {
+    "intro": {
+      "type": "text",
+      "title": "Bishwash Adventures",
+      "subtitle": "Beta",
+      "content": [
+        "Welcome to Bishwash Adventures!",
+        "",
+        "This is a simple text-based adventure game.",
+        "Navigate through scenes and make choices.",
+        "",
+        "Click anywhere to continue..."
+      ],
+      "next": "main_menu"
+    },
+    "main_menu": {
+      "type": "menu",
+      "title": "Main Menu",
+      "options": [
+        {"text": "Start New Game", "next": "village_intro"},
+        {"text": "Load Game", "next": "load_game"},
+        {"text": "Settings", "next": "settings"},
+        {"text": "Quit", "next": "exit"}
+      ]
+    },
+    "village_intro": {
+      "type": "text",
+      "title": "The Village",
+      "content": [
+        "You arrive at a small village.",
+        "The air is filled with the sounds of people going about their daily lives.",
+        "",
+        "What would you like to do?",
+        "",
+        "Click to continue..."
+      ],
+      "next": "village_choice"
+    },
+    "village_choice": {
+      "type": "menu",
+      "title": "Village Square",
+      "options": [
+        {"text": "Talk to the Merchant", "next": "merchant"},
+        {"text": "Visit the Library", "next": "library"},
+        {"text": "Play a Game", "next": "game_selection"},
+        {"text": "Leave Village", "next": "exit_village"}
+      ]
+    },
+    "merchant": {
+      "type": "text",
+      "title": "The Merchant",
+      "content": [
+        "The merchant greets you warmly.",
+        "'Welcome, traveler! I have the finest wares in all the land.'",
+        "",
+        "He shows you various items but nothing catches your eye.",
+        "",
+        "Click to return to village..."
+      ],
+      "next": "village_choice"
+    },
+    "library": {
+      "type": "text",
+      "title": "The Library",
+      "content": [
+        "The library is quiet and peaceful.",
+        "Rows of books line the walls.",
+        "",
+        "A librarian approaches you.",
+        "'Welcome to our library. How may I help you?'",
+        "",
+        "Click to return to village..."
+      ],
+      "next": "village_choice"
+    },
+    "game_selection": {
+      "type": "menu",
+      "title": "Available Games",
+      "options": [
+        {"text": "Snake Game", "next": "play_snake"},
+        {"text": "Minesweeper", "next": "play_minesweeper"},
+        {"text": "Password Puzzle", "next": "play_password"},
+        {"text": "Flappy Bird", "next": "play_flappy_bird"},
+        {"text": "Tetris", "next": "play_tetris"},
+        {"text": "Pong", "next": "play_pong"},
+        {"text": "Nine Puzzle", "next": "play_nine_puzzle"},
+        {"text": "Two Guards", "next": "play_two_guards"},
+        {"text": "Back to Village", "next": "village_choice"}
+      ]
+    },
+    "play_snake": {
+      "type": "minigame",
+      "game": "snake",
+      "next": "village_choice"
+    },
+    "play_minesweeper": {
+      "type": "minigame", 
+      "game": "minesweeper",
+      "next": "village_choice"
+    },
+    "play_password": {
+      "type": "minigame",
+      "game": "password",
+      "next": "village_choice"
+    },
+    "play_flappy_bird": {
+      "type": "minigame",
+      "game": "flappy_bird",
+      "next": "village_choice"
+    },
+    "play_tetris": {
+      "type": "minigame",
+      "game": "tetris",
+      "next": "village_choice"
+    },
+    "play_pong": {
+      "type": "minigame",
+      "game": "pong",
+      "next": "village_choice"
+    },
+    "play_nine_puzzle": {
+      "type": "minigame",
+      "game": "nine_puzzle",
+      "next": "village_choice"
+    },
+    "play_two_guards": {
+      "type": "minigame",
+      "game": "two_guards",
+      "next": "village_choice"
+    },
+    "exit_village": {
+      "type": "text",
+      "title": "Leaving the Village",
+      "content": [
+        "You decide to leave the village.",
+        "The adventure continues elsewhere...",
+        "",
+        "Thanks for playing!",
+        "",
+        "Click to return to main menu..."
+      ],
+      "next": "main_menu"
+    },
+    "load_game": {
+      "type": "text",
+      "title": "Load Game",
+      "content": [
+        "Load game functionality not implemented yet.",
+        "",
+        "Click to return to main menu..."
+      ],
+      "next": "main_menu"
+    },
+    "settings": {
+      "type": "text",
+      "title": "Settings",
+      "content": [
+        "Settings not implemented yet.",
+        "",
+        "Click to return to main menu..."
+      ],
+      "next": "main_menu"
+    },
+    "exit": {
+      "type": "exit"
+    }
+  }
+} 
