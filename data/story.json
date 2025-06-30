@@ -1,169 +1,476 @@
 {
-  "scenes": {
-    "intro": {
-      "type": "text",
-      "title": "Bishwash Adventures",
-      "subtitle": "Beta",
-      "content": [
-        "Welcome to Bishwash Adventures!",
-        "",
-        "This is a simple text-based adventure game.",
-        "Navigate through scenes and make choices.",
-        "",
-        "Click anywhere to continue..."
-      ],
-      "next": "main_menu"
+  "characters": {
+    "Cael": {
+      "sprite": "assets/character.jpg",
+      "side": "left"
     },
-    "main_menu": {
-      "type": "menu",
-      "title": "Main Menu",
-      "options": [
-        {"text": "Start New Game", "next": "village_intro"},
-        {"text": "Load Game", "next": "load_game"},
-        {"text": "Settings", "next": "settings"},
-        {"text": "Quit", "next": "exit"}
+    "Keeper of Beginnings": {
+      "sprite": "assets/keeper.webp",
+      "side": "right"
+    },
+    "Narrator": {
+      "side": "center"
+    },
+    "Unknown Echo": {
+      "side": "right"
+    },
+    "Whispering Voice": {
+      "side": "right"
+    },
+    "Guardian Spirit": {
+      "side": "right"
+    },
+    "Vault Echo": {
+      "side": "right"
+    }
+  },
+  "settings": {
+    "tower": {
+      "background": "assets/tower.webp"
+    },
+    "valley_of_soul_shards": {
+      "background": "assets/valley_of_soul_shards.webp"
+    },
+    "rune_gate_hall": {
+      "background": "assets/rune_gate_hall.webp"
+    },
+    "forgotten_vault": {
+      "background": "assets/forgotten_vault.webp"
+    }
+  },
+  "scenes": {
+    "scene_1": {
+      "type": "conversation",
+      "title": "The Tower",
+      "location": "tower",
+      "characters": ["Cael", "Keeper of Beginnings", "Narrator"],
+      "conversation": [
+        {
+          "character": "Narrator",
+          "text": "In the heart of the Tower of Beginnings, a young adventurer named Cael awakens. Before them stands the Keeper of Beginnings — a spectral figure, face hidden beneath a shifting veil of starlight."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "You heard the call... and you answered. The Tower does not summon lightly."
+        },
+        {
+          "character": "Cael",
+          "text": "I... think I dreamed of this place. But it felt more like a memory than a dream."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The line between dream and truth is thinner here. What matters is that you have arrived. But know this — each floor tests not what you are, but what you hide."
+        },
+        {
+          "character": "Cael",
+          "text": "Why was I chosen?"
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "You carry weight unseen, shadows you do not yet name. The Tower sees all. It listens. It judges."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Your first trial awaits — the Sky Bridge of the Ancients. You must ride the spectral bird through the bones of a city devoured by wind and time."
+        },
+        {
+          "character": "Cael",
+          "text": "That... doesn't sound survivable."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "It rarely is. But the Tower does not demand perfection — only persistence."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Fall, and you will begin again. The Tower will remember. So will your soul-mark."
+        },
+        {
+          "character": "Cael",
+          "text": "...Alright. I'm ready. Let's begin."
+        },
+        {
+          "character": "Narrator",
+          "text": "Cael steps forward as a radiant bird made of swirling light descends from the sky. Its wings stir the dust of forgotten ages. Wind roars through the shattered arches above."
+        },
+        {
+          "character": "Narrator",
+          "text": "The Trial of the Winds begins."
+        }
       ]
     },
-    "village_intro": {
+    "scene_2": {
       "type": "text",
-      "title": "The Village",
+      "title": "The Sky Bridge",
+      "location": "tower",
       "content": [
-        "You arrive at a small village.",
-        "The air is filled with the sounds of people going about their daily lives.",
+        "You find yourself on a narrow bridge suspended in the sky.",
+        "The wind howls around you, and below, the ruins of an ancient city stretch out as far as the eye can see.",
         "",
-        "What would you like to do?",
+        "A spectral bird appears, ready to take you on your journey.",
         "",
         "Click to continue..."
-      ],
-      "next": "village_choice"
-    },
-    "village_choice": {
-      "type": "menu",
-      "title": "Village Square",
-      "options": [
-        {"text": "Talk to the Merchant", "next": "merchant"},
-        {"text": "Visit the Library", "next": "library"},
-        {"text": "Play a Game", "next": "game_selection"},
-        {"text": "Leave Village", "next": "exit_village"}
       ]
     },
-    "merchant": {
-      "type": "text",
-      "title": "The Merchant",
-      "content": [
-        "The merchant greets you warmly.",
-        "'Welcome, traveler! I have the finest wares in all the land.'",
-        "",
-        "He shows you various items but nothing catches your eye.",
-        "",
-        "Click to return to village..."
-      ],
-      "next": "village_choice"
-    },
-    "library": {
-      "type": "text",
-      "title": "The Library",
-      "content": [
-        "The library is quiet and peaceful.",
-        "Rows of books line the walls.",
-        "",
-        "A librarian approaches you.",
-        "'Welcome to our library. How may I help you?'",
-        "",
-        "Click to return to village..."
-      ],
-      "next": "village_choice"
-    },
-    "game_selection": {
-      "type": "menu",
-      "title": "Available Games",
-      "options": [
-        {"text": "Snake Game", "next": "play_snake"},
-        {"text": "Minesweeper", "next": "play_minesweeper"},
-        {"text": "Password Puzzle", "next": "play_password"},
-        {"text": "Flappy Bird", "next": "play_flappy_bird"},
-        {"text": "Tetris", "next": "play_tetris"},
-        {"text": "Pong", "next": "play_pong"},
-        {"text": "Nine Puzzle", "next": "play_nine_puzzle"},
-        {"text": "Two Guards", "next": "play_two_guards"},
-        {"text": "Back to Village", "next": "village_choice"}
-      ]
-    },
-    "play_snake": {
-      "type": "minigame",
-      "game": "snake",
-      "next": "village_choice"
-    },
-    "play_minesweeper": {
-      "type": "minigame", 
-      "game": "minesweeper",
-      "next": "village_choice"
-    },
-    "play_password": {
-      "type": "minigame",
-      "game": "password",
-      "next": "village_choice"
-    },
-    "play_flappy_bird": {
+    "scene_3": {
       "type": "minigame",
       "game": "flappy_bird",
-      "next": "village_choice"
+      "score_to_beat": 10,
+      "victory_message": "You successfully navigated the Sky Bridge!",
+      "defeat_message": "You fell from the Sky Bridge. The Tower remembers your fall."
     },
-    "play_tetris": {
+    "scene_4": {
+      "type": "conversation",
+      "title": "The Keeper's Reflection",
+      "location": "tower",
+      "characters": [
+        "Cael",
+        "Keeper of Beginnings",
+        "Unknown Echo",
+        "Narrator"
+      ],
+      "conversation": [
+        {
+          "character": "Narrator",
+          "text": "Winds scream across the sky as Cael clings to the spectral bird. With battered wings and unyielding will, they reach the far edge of the ruined city."
+        },
+        {
+          "character": "Narrator",
+          "text": "The Trial of the Winds is passed — though the soul-mark glows faintly, tallying each fall into the abyss."
+        },
+        {
+          "character": "Cael",
+          "text": "*panting* I thought I was going to die up there... again."
+        },
+        {
+          "character": "Unknown Echo",
+          "text": "*a whisper from nowhere* And yet you didn't. That makes you dangerous."
+        },
+        {
+          "character": "Narrator",
+          "text": "The spectral bird dissolves into mist. Cael lands in a narrow canyon, its floor scattered with strange, glimmering stones. The wind is gone — replaced by silence and tension."
+        },
+        {
+          "character": "Cael",
+          "text": "What... is this place?"
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "These are the Mines of Memory. Beneath your feet lie shards of war — echoes of pain that never faded."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Step lightly. Every wrong move awakens a fragment of sorrow. To find what you seek, you must remember what was never yours."
+        },
+        {
+          "character": "Cael",
+          "text": "So now I have to suffer someone else's past too? This Tower really doesn't care who I was before."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Precisely. And the deeper you go, the less of yourself you'll recognize."
+        },
+        {
+          "character": "Narrator",
+          "text": "The air trembles with a thousand unseen voices. The mines await."
+        }
+      ]
+    },
+    "scene_5": {
+      "type": "text",
+      "title": "The Mines of Memory",
+      "location": "valley_of_soul_shards",
+      "content": [
+        "You step into the Mines of Memory, a dark and eerie place.",
+        "The walls are lined with strange, glowing stones that pulse with an otherworldly light.",
+        "",
+        "You can feel the weight of countless memories pressing down on you.",
+        "",
+        "Click to continue..."
+      ]
+    },
+    "scene_6": {
       "type": "minigame",
-      "game": "tetris",
-      "next": "village_choice"
+      "game": "minesweeper",
+      "num_mines": 10,
+      "victory_message": "You successfully navigated the Mines of Memory!",
+      "defeat_message": "You triggered a memory trap. The Tower remembers your fall."
     },
-    "play_pong": {
-      "type": "minigame",
-      "game": "pong",
-      "next": "village_choice"
+    "scene_7": {
+      "type": "text",
+      "title": "The Keeper's Guidance",
+      "location": "valley_of_soul_shards",
+      "content": [
+        "You emerge from the Mines of Memory, shaken but alive.",
+        "The Keeper of Beginnings awaits you at the entrance.",
+        "",
+        "The spectral bird reappears, ready to take you to the next trial.",
+        "",
+        "Click to continue..."
+      ]
     },
-    "play_nine_puzzle": {
+    "scene_8": {
+      "type": "conversation",
+      "location": "valley_of_soul_shards",
+      "characters": ["Cael", "Whispering Voice"],
+      "conversation": [
+        {
+          "character": "Cael",
+          "text": "Those shards... they weren't just memories. I felt their pain, their fear. It's like their echoes still linger here... in the very earth."
+        },
+        {
+          "character": "Whispering Voice",
+          "text": "You carry their burden now... tread carefully, for what lies ahead is no less daunting."
+        },
+        {
+          "character": "Cael",
+          "text": "A door... guarded by riddles. If these runes are any indication, it's not just a lock on the outside... but on the inside too."
+        },
+        {
+          "character": "Whispering Voice",
+          "text": "The past and present are entwined. The puzzle is more than a test of logic. It's a test of resolve."
+        },
+        {
+          "character": "Cael",
+          "text": "I'm ready. Whatever waits beyond, I'll face it. But... I need to be sure. Doubt is the real enemy."
+        },
+        {
+          "character": "Whispering Voice",
+          "text": "Then solve the riddle... and confront the shadows within."
+        }
+      ]
+    },
+    "scene_9": {
+      "type": "text",
+      "title": "The Valley of Soul Shards",
+      "location": "valley_of_soul_shards",
+      "content": [
+        "You find yourself in a valley filled with glowing shards of light.",
+        "Each shard seems to pulse with a life of its own, whispering secrets of the past.",
+        "",
+        "A door stands before you, covered in ancient runes.",
+        "",
+        "Click to continue..."
+      ]
+    },
+    "scene_10": {
       "type": "minigame",
       "game": "nine_puzzle",
-      "next": "village_choice"
+      "victory_message": "You solved the riddle and opened the door!",
+      "defeat_message": "You failed to solve the riddle. The Tower remembers your fall."
     },
-    "play_two_guards": {
+    "scene_11": {
+      "type": "text",
+      "title": "The Keeper's Farewell",
+      "location": "valley_of_soul_shards",
+      "content": [
+        "You step through the door and find yourself in a vast chamber filled with light.",
+        "The Keeper of Beginnings stands before you, a proud smile on their face.",
+        "",
+        "You have completed the trials of the Tower.",
+        "",
+        "Click to continue..."
+      ]
+    },
+    "scene_12": {
+      "type": "conversation",
+      "location": "rune_gate_hall",
+      "characters": ["Cael", "Guardian Spirit"],
+      "conversation": [
+        {
+          "character": "Cael",
+          "text": "The rune puzzle... it tested more than my mind. These ancient symbols seem alive, like they're watching, waiting."
+        },
+        {
+          "character": "Guardian Spirit",
+          "text": "Every trial is a step deeper into the truth. The puzzle was a gate — not just in stone, but in spirit.",
+          "style": "ethereal"
+        },
+        {
+          "character": "Cael",
+          "text": "Beyond this hall lies the Vault of Secrets... a place where knowledge and power intertwine, guarded by arcane mechanisms."
+        },
+        {
+          "character": "Guardian Spirit",
+          "text": "Within the vault, you will face a different challenge. Not of brute strength, but of cunning and will.",
+          "style": "ethereal"
+        },
+        {
+          "character": "Cael",
+          "text": "I must prepare myself. The path grows darker, but I won't falter. Every secret I uncover brings me closer to understanding who I truly am."
+        }
+      ]
+    },
+    "scene_13": {
+      "type": "text",
+      "title": "The Rune Gate Hall",
+      "location": "rune_gate_hall",
+      "content": [
+        "You enter the Rune Gate Hall, a vast chamber filled with ancient runes and symbols.",
+        "The air is thick with magic, and the walls seem to pulse with energy.",
+        "",
+        "A guardian spirit appears, ready to guide you through the next trial.",
+        "",
+        "Click to continue..."
+      ]
+    },
+    "scene_14": {
+      "type": "minigame",
+      "game": "password_puzzle",
+      "password": "secrets",
+      "clues": [
+        "The first letter is the first letter of the word 'Secrets'.",
+        "The second letter is the third letter of the word 'Secrets'.",
+        "The third letter is the fifth letter of the word 'Secrets'.",
+        "The fourth letter is the last letter of the word 'Secrets'."
+      ],
+      "victory_message": "You solved the password and unlocked the Vault of Secrets!",
+      "defeat_message": "You failed to solve the password. The Vault remains sealed."
+    },
+    "scene_15": {
+      "type": "text",
+      "title": "The Keeper's Legacy",
+      "location": "rune_gate_hall",
+      "content": [
+        "You step into the Vault of Secrets, a place of immense power and knowledge.",
+        "The Keeper of Beginnings stands before you, their form shimmering with ethereal light.",
+        "",
+        "You have completed the trials of the Tower and proven your worth.",
+        "",
+        "Click to continue..."
+      ]
+    },
+    "scene_16": {
+      "type": "conversation",
+      "location": "forgotten_vault",
+      "characters": ["Cael", "Vault Echo"],
+      "conversation": [
+        {
+          "character": "Cael",
+          "text": "The vault's password... It's more than a word. It's a memory I tried to bury."
+        },
+        {
+          "character": "Vault Echo",
+          "text": "Fear once held you prisoner, Cael. Only by facing it can the path forward be revealed.",
+          "style": "mysterious"
+        },
+        {
+          "character": "Cael",
+          "text": "I can feel the weight of those failed attempts... the shame, the doubt. But I must push onward."
+        },
+        {
+          "character": "Vault Echo",
+          "text": "Beware, too much failure will seal this place forever. Your mind may yet become your own worst enemy.",
+          "style": "ominous"
+        },
+        {
+          "character": "Cael",
+          "text": "Next lies the Arena of Reflection — where I must face myself, not just my fears."
+        },
+        {
+          "character": "Vault Echo",
+          "text": "The duel within the mirror tests your soul and your will. Will you triumph, or be consumed?",
+          "style": "ominous"
+        }
+      ]
+    },
+    "scene_17": {
+      "type": "text",
+      "title": "The Forgotten Vault",
+      "location": "forgotten_vault",
+      "content": [
+        "You enter the Forgotten Vault, a place of ancient secrets and forgotten knowledge.",
+        "The air is thick with dust, and the walls are lined with books and scrolls.",
+        "",
+        "A vault echo appears, ready to guide you through the final trial.",
+        "",
+        "Click to continue..."
+      ]
+    },
+    "scene_18": {
+      "type": "minigame",
+      "game": "pong_game",
+      "victory_message": "You won the duel in the Arena of Reflection!",
+      "defeat_message": "You lost the duel. The Arena remembers your fall."
+    },
+    "scene_19": {
+      "type": "minigame",
+      "game": "tetris_game",
+      "victory_message": "You cleared the lines and proved your skill!",
+      "defeat_message": "You failed to clear the lines. The Tower remembers your fall."
+    },
+    "scene_20": {
       "type": "minigame",
       "game": "two_guards",
-      "next": "village_choice"
+      "victory_message": "You outwitted the two guards and moved forward!",
+      "defeat_message": "The guards stopped you. The Tower remembers your failure."
     },
-    "exit_village": {
+    "scene_21": {
+      "type": "minigame",
+      "game": "snake_game",
+      "victory_message": "You survived the maze and mastered the shadows!",
+      "defeat_message": "You got caught in the shadows. The Tower remembers your fall."
+    },
+    "scene_22": {
       "type": "text",
-      "title": "Leaving the Village",
+      "title": "The Final Awakening",
+      "location": "forgotten_vault",
       "content": [
-        "You decide to leave the village.",
-        "The adventure continues elsewhere...",
+        "Having conquered the trials and faced your deepest fears, you stand at the heart of the Tower.",
+        "The shadows no longer haunt you; instead, they whisper of a new beginning.",
+        "The Tower's mysteries are yours to command.",
         "",
-        "Thanks for playing!",
-        "",
-        "Click to return to main menu..."
-      ],
-      "next": "main_menu"
+        "Your journey has only just begun."
+      ]
     },
-    "load_game": {
+    "scene_23": {
+      "type": "conversation",
+      "location": "forgotten_vault",
+      "characters": ["Narrator", "Cael", "Keeper of Beginnings"],
+      "conversation": [
+        {
+          "character": "Narrator",
+          "text": "As the dust settles in the Vault, Cael feels a profound calm wash over them."
+        },
+        {
+          "character": "Cael",
+          "text": "I came here seeking answers, but I found something far greater — myself."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The Tower tests all who enter, but only those who endure find their truth."
+        },
+        {
+          "character": "Cael",
+          "text": "Then this is not the end, but the first step of many."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Go forth, adventurer. Your story will be told in the echoes of the Tower."
+        },
+        {
+          "character": "Narrator",
+          "text": "With a final glance back, Cael steps forward into the unknown, ready for whatever lies ahead."
+        }
+      ]
+    },
+    "scene_24": {
       "type": "text",
-      "title": "Load Game",
+      "title": "Credits",
+      "location": "forgotten_vault",
       "content": [
-        "Load game functionality not implemented yet.",
+        "Thank you for playing!",
         "",
-        "Click to return to main menu..."
-      ],
-      "next": "main_menu"
-    },
-    "settings": {
-      "type": "text",
-      "title": "Settings",
-      "content": [
-        "Settings not implemented yet.",
+        "Story by: bellatrixesque",
+        "Game Design: bellatrixesque",
+        "Art and Assets: Sora",
+        "Programming: bellatrixesque",
         "",
-        "Click to return to main menu..."
-      ],
-      "next": "main_menu"
-    },
-    "exit": {
-      "type": "exit"
+        "Special Thanks to:",
+        "— All the brave adventurers who dared to enter the Tower.",
+        "",
+        "© 2025 Catastropic Game Studio"
+      ]
     }
   }
-} 
+}

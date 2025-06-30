@@ -3,7 +3,6 @@ import matplotlib.patches as patches
 import numpy as np
 import random
 import keyboard
-import time
 from matplotlib.animation import FuncAnimation
 
 class MinesweeperGame:
@@ -39,17 +38,22 @@ class MinesweeperGame:
         keyboard.on_press_key('r', lambda _: self.restart())
         keyboard.on_press_key('escape', lambda _: self.quit_game())
     def on_click(self, event):
-        if self.game_over or self.game_won: return
-        if event.inaxes != self.ax: return
+        if self.game_over or self.game_won:
+            return
+        if event.inaxes != self.ax:
+            return
         x, y = int(event.xdata), int(event.ydata)
         if 0 <= x < self.width and 0 <= y < self.height:
-            if event.button == 1: self.reveal_cell(x, y)
-            elif event.button == 3: self.toggle_flag(x, y)
+            if event.button == 1:
+                self.reveal_cell(x, y)
+            elif event.button == 3:
+                self.toggle_flag(x, y)
     def place_mines(self, first_x, first_y):
         positions = [(x, y) for x in range(self.width) for y in range(self.height)]
         positions.remove((first_x, first_y))
         mine_positions = random.sample(positions, self.num_mines)
-        for x, y in mine_positions: self.board[y, x] = -1
+        for x, y in mine_positions:
+            self.board[y, x] = -1
         for x, y in mine_positions:
             for dx in [-1, 0, 1]:
                 for dy in [-1, 0, 1]:
@@ -58,7 +62,8 @@ class MinesweeperGame:
                         self.board[ny, nx] += 1
         self.mines_placed = True
     def reveal_cell(self, x, y):
-        if self.revealed[y, x] or self.flagged[y, x]: return
+        if self.revealed[y, x] or self.flagged[y, x]:
+            return
         if self.first_click:
             self.place_mines(x, y)
             self.first_click = False
@@ -75,15 +80,18 @@ class MinesweeperGame:
                         self.reveal_cell(nx, ny)
         self.check_win()
     def toggle_flag(self, x, y):
-        if not self.revealed[y, x]: self.flagged[y, x] = not self.flagged[y, x]
+        if not self.revealed[y, x]:
+            self.flagged[y, x] = not self.flagged[y, x]
     def reveal_all_mines(self):
         for y in range(self.height):
             for x in range(self.width):
-                if self.board[y, x] == -1: self.revealed[y, x] = True
+                if self.board[y, x] == -1:
+                    self.revealed[y, x] = True
     def check_win(self):
         for y in range(self.height):
             for x in range(self.width):
-                if self.board[y, x] != -1 and not self.revealed[y, x]: return
+                if self.board[y, x] != -1 and not self.revealed[y, x]:
+                    return
         self.game_won = True
     def restart(self):
         self.board = np.zeros((self.height, self.width), dtype=int)
@@ -114,9 +122,9 @@ class MinesweeperGame:
         self.ax.set_xticks([])
         self.ax.set_yticks([])
         if self.game_over:
-            self.ax.set_title(f'GAME OVER! You hit a mine!\nPress R to restart or ESC to quit', fontsize=16, fontweight='bold', color='red')
+            self.ax.set_title('GAME OVER! You hit a mine!\nPress R to restart or ESC to quit', fontsize=16, fontweight='bold', color='red')
         elif self.game_won:
-            self.ax.set_title(f'YOU WIN! All mines found!\nPress R to restart or ESC to quit', fontsize=16, fontweight='bold', color='green')
+            self.ax.set_title('YOU WIN! All mines found!\nPress R to restart or ESC to quit', fontsize=16, fontweight='bold', color='green')
         else:
             self.ax.set_title(f'Minesweeper - Mines: {self.num_mines}', fontsize=16, fontweight='bold')
         for y in range(self.height):
@@ -147,28 +155,9 @@ class MinesweeperGame:
         self.draw()
         return []
     def run(self):
-        print("Minesweeper Game Started!")
-        print("Controls:")
-        print("- Left click: Reveal cell")
-        print("- Right click: Flag/unflag cell")
-        print("- R: Restart game")
-        print("- ESC: Return to main menu")
         self.anim = FuncAnimation(self.fig, self.update, interval=100, blit=False, repeat=True, cache_frame_data=False)
         self.anim.event_source.start()
         while not self.game_over and not self.game_won:
             plt.pause(0.1)
         self.anim.event_source.stop()
-
-def run_minesweeper_game(fig, ax):
-    try:
-        game = MinesweeperGame(fig, ax)
-        game.run()
-    except KeyboardInterrupt:
-        print("\nGame stopped by user")
-    except Exception as e:
-        print(f"Error: {e}")
-
-if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize=(10, 10))
-    run_minesweeper_game(fig, ax) 
+        return self.game_won

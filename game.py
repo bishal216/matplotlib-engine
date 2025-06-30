@@ -1,181 +1,130 @@
-"""
-Simple Adventure Game using SceneManager.
-"""
-
 import matplotlib.pyplot as plt
 import sys
 import os
+import json
 
-# Add the project root to the path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from core.scene_manager import SceneManager
-from ui.simple_renderer import SimpleRenderer
-from ui.simple_input import SimpleInputHandler
-from minigames.simple_minigame_manager import SimpleMinigameManager
+from scenes.conversation_cutscene import conversation_cutscene
+from scenes.text_scene import text_scene
+from scenes.flappy_bird import FlappyBirdGame
+from scenes.minesweeper import MinesweeperGame
+from scenes.nine_puzzle import NinePuzzleGame
+from scenes.password_puzzle import PasswordPuzzleGame
+from scenes.pong_game import PongGame
+from scenes.snake_game import SnakeGame
+from scenes.tetris_game import TetrisGame
+from scenes.two_guards import TwoGuardsGame
 
 
-class SimpleAdventureGame:
-    """Simple adventure game using SceneManager."""
-
+# Constants
+WIDTH = 12
+HEIGHT = 8
+class Game:
     def __init__(self):
-        self.scene_manager = SceneManager()
-        self.minigame_manager = SimpleMinigameManager()
+        # load story
+        self.story = json.load(open('data/story.json'))
+        self.characters = self.story.get('characters', {})
+        self.settings = self.story.get('settings', {})
+        self.scenes = self.story.get('scenes', [])
 
-        # Setup matplotlib
-        plt.ion()  # Interactive mode
-        self.fig, self.ax = plt.subplots(figsize=(12, 8))
-        self.fig.canvas.manager.set_window_title('Bishwash Adventures')
+        # Ensure scenes is a list
+        if isinstance(self.scenes, dict):
+            self.scenes = list(self.scenes.values())
 
-        # Setup renderer and input handler
-        self.renderer = SimpleRenderer(self.fig, self.ax)
-        self.input_handler = SimpleInputHandler(self.fig)
-
-        # Setup figure close event handler
-        self.fig.canvas.mpl_connect('close_event', self.on_figure_close)
+        self.current_index = 0
+        self.running = True
         self.figure_closed = False
 
-        self.running = False
+        # Create renderer
+        plt.ion()
+        self.fig, self.ax = plt.subplots(figsize=(WIDTH, HEIGHT))
+        self.ax.margins(0)
+        self.fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
+        self.fig.canvas.manager.set_window_title("Adventures")
+
+        self.fig.canvas.mpl_connect('close_event', self.on_figure_close)
+        self.fig.canvas.mpl_connect('key_press_event', self.on_key_press)
 
     def on_figure_close(self, event):
-        """Handle figure close event."""
-        print("Game window was closed by user.")
         self.figure_closed = True
         self.running = False
+        plt.close('all')
+        sys.exit(0)
 
-    def initialize(self) -> bool:
-        """Initialize the game."""
-        print("Initializing Simple Adventure Game...")
-
-        # Load story
-        if not self.scene_manager.load_story():
-            print("Failed to load story data.")
-            return False
-
-        print("Game initialized successfully!")
-        return True
+    def on_key_press(self, event):
+        if event.key == ' ' or event.key == 'space':
+            self.space_pressed = True
 
     def is_figure_closed(self) -> bool:
-        """Check if the figure has been closed by the user."""
         if self.figure_closed:
             return True
         try:
-            # Try to access the figure's canvas
             _ = self.fig.canvas
             return False
         except AttributeError:
             return True
 
     def run(self):
-        """Run the main game loop."""
-        if not self.initialize():
-            return
-
-        self.running = True
-        print("Starting game loop...")
-
-        while self.running:
-            # Check if figure was closed by user
+        while self.running and self.current_index < len(self.scenes):
             if self.is_figure_closed():
-                print("Game window was closed by user.")
-                self.running = False
                 break
 
-            self.update()
-            self.render()
-
+            scene = self.scenes[self.current_index]
+            self.render_scene(scene)
+            self.current_index += 1
         self.cleanup()
 
-    def update(self):
-        """Update game state."""
-        # Handle input
-        key, mouse = self.input_handler.get_input()
-
-        if self.scene_manager.is_exit_scene():
-            self.running = False
-            return
-
-        if self.scene_manager.is_text_scene():
-            # Text scenes advance on any input
-            if key or mouse:
-                self.scene_manager.go_to_next_scene()
-
-        elif self.scene_manager.is_menu_scene():
-            # Menu scenes handle navigation
-            if key == 'up':
-                self.scene_manager.move_selection(-1)
-            elif key == 'down':
-                self.scene_manager.move_selection(1)
-            elif key == 'enter':
-                self.scene_manager.select_option(self.scene_manager.selected_option)
-
-        elif self.scene_manager.is_minigame_scene():
-            # Minigame scenes - launch the game and wait for it to complete
-            game_name = self.scene_manager.get_minigame_name()
-            if game_name:
-                print(f"Launching {game_name}...")
-
-                # Launch minigame with shared figure if supported
-                success = self.minigame_manager.launch_game(game_name, self.fig, self.ax)
-
-                if success:
-                    print(f"{game_name} completed successfully!")
-                else:
-                    print(f"Failed to run {game_name}")
-
-            # Go to next scene after minigame (regardless of success/failure)
-            self.scene_manager.go_to_next_scene()
-
-    def render(self):
-        """Render the current scene."""
-        # Check if figure is still valid before rendering
-        if self.is_figure_closed():
-            return
-
-        self.renderer.clear()
-
-        current_scene = self.scene_manager.get_current_scene()
-        if not current_scene:
-            return
-
-        scene_type = current_scene.get('type', 'text')
-
-        if scene_type == 'text':
-            self.renderer.draw_text_scene(current_scene)
-        elif scene_type == 'menu':
-            self.renderer.draw_menu_scene(current_scene, self.scene_manager.selected_option)
+    def render_scene(self, scene):
+        scene_type = scene.get('type')
+        if scene_type == 'conversation':
+            conversation_cutscene(
+                self.ax, self.settings[scene.get('location')].get('background'), scene['conversation'], self.characters)
+        elif scene_type == 'text':
+            text_scene(self.ax, scene, self.settings)
         elif scene_type == 'minigame':
-            self.renderer.draw_minigame_scene(current_scene)
-        elif scene_type == 'exit':
-            # Exit scene - just show a message
-            self.ax.text(5, 4, "Thanks for playing!", fontsize=24, fontweight='bold',
-                        ha='center', va='center', color='#e74c3c')
+            minigame_name = scene.get('game')
+            if minigame_name == 'flappy_bird':
+                target_score = scene.get('score_to_beat', 10)
+                score = 0
+                while score < target_score:
+                    fb = FlappyBirdGame(self.fig, self.ax, target_score, width=WIDTH, height=HEIGHT, victory_message=scene.get("victory_message", "You win!"), defeat_message=scene.get("defeat_message", "You lose!"))
+                    score = fb.run()
+            elif minigame_name == 'minesweeper':
+                game_won = False
+                while not game_won:
+                    mg = MinesweeperGame(self.fig, self.ax, width=WIDTH, height=HEIGHT, num_mines=scene.get('num_mines', 10))
+                    game_won = mg.run()
+            elif minigame_name == 'nine_puzzle':
+                np_game = NinePuzzleGame(self.fig, self.ax)
+                np_game.run()
+            elif minigame_name == 'password_puzzle':
+                pp_game = PasswordPuzzleGame(self.fig, self.ax, scene.get('clues', []), scene.get('password'))
+                pp_game.run()
+            elif minigame_name == 'pong_game':
+                game = PongGame(self.fig, self.ax)
+                game.run()
+            elif minigame_name == "snake_game":
+                snake_game = SnakeGame(self.fig, self.ax, width=WIDTH, height=HEIGHT)
+                snake_game.run()
+            elif minigame_name == "tetris_game":
+                tetris_game = TetrisGame(self.fig, self.ax, width=WIDTH, height=HEIGHT)
+                tetris_game.run()
+            elif minigame_name == "two_guards":
+                two_guards_game = TwoGuardsGame(self.fig, self.ax, width=WIDTH, height=HEIGHT)
+                two_guards_game.run()
 
-        self.renderer.show()
+
+        elif scene_type == 'exit':
+            self.running = False
 
     def cleanup(self):
-        """Clean up resources."""
-        print("Cleaning up...")
-        try:
-            plt.close('all')
-        except Exception as e:
-            print(f"Error closing figures: {e}")
-            pass
-        print("Game ended.")
+        plt.close('all')
 
 
 def main():
-    """Main entry point."""
-    game = SimpleAdventureGame()
-    try:
-        game.run()
-    except KeyboardInterrupt:
-        print("\nGame interrupted by user.")
-    except Exception as e:
-        print(f"Error running game: {e}")
-        import traceback
-        traceback.print_exc()
-
+    game = Game()
+    game.run()
 
 if __name__ == "__main__":
     main()

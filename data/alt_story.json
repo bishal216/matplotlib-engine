@@ -1,0 +1,18 @@
+{
+  "characters": {
+    "Elara Voss": { "sprite": "assets/elara.png", "side": "left" },
+    "Vivian Blackthorn": { "sprite": "assets/vivian.png", "side": "right" },
+    "Inspector Grant": { "sprite": "assets/grant.png", "side": "right" },
+    "The Whisper": { "side": "center" },
+    "The Shadow": { "side": "right" }
+  },
+  "settings": {
+    "entrance_hall": { "background": "assets/entrance_hall.jpg" },
+    "library": { "background": "assets/library.jpg" },
+    "study_room": { "background": "assets/study_room.jpg" },
+    "garden_maze": { "background": "assets/garden_maze.jpg" },
+    "basement_vault": { "background": "assets/basement_vault.jpg" },
+    "secret_attic": { "background": "assets/secret_attic.jpg" }
+  },
+  "scenes": {}
+}
