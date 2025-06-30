@@ -22,6 +22,13 @@
     },
     "Vault Echo": {
       "side": "right"
+    },
+    "Mirror Guardian": {
+      "sprite": "assets/tower_guardian.gif",
+      "side": "center"
+    },
+    "Tower Consciousness": {
+      "side": "omnipresent"
     }
   },
   "settings": {
@@ -29,13 +36,19 @@
       "background": "assets/tower.webp"
     },
     "valley_of_soul_shards": {
-      "background": "assets/valley_of_soul_shards.webp"
+      "background": "assets/valley.png"
     },
     "rune_gate_hall": {
-      "background": "assets/rune_gate_hall.webp"
+      "background": "assets/gate.webp"
     },
     "forgotten_vault": {
-      "background": "assets/forgotten_vault.webp"
+      "background": "assets/vault.png"
+    },
+    "arena_of_reflection": {
+      "background": "assets/arena_of_reflection.webp"
+    },
+    "tower_heart": {
+      "background": "assets/tower_heart.webp"
     }
   },
   "scenes": {
@@ -47,7 +60,7 @@
       "conversation": [
         {
           "character": "Narrator",
-          "text": "In the heart of the Tower of Beginnings, a young adventurer named Cael awakens. Before them stands the Keeper of Beginnings — a spectral figure, face hidden beneath a shifting veil of starlight."
+          "text": "In the heart of the Tower of Beginnings, a young adventurer named Cael awakens. Before them stands the Keeper of Beginnings : a spectral figure, face hidden beneath a shifting veil of starlight."
         },
         {
           "character": "Keeper of Beginnings",
@@ -59,7 +72,7 @@
         },
         {
           "character": "Keeper of Beginnings",
-          "text": "The line between dream and truth is thinner here. What matters is that you have arrived. But know this — each floor tests not what you are, but what you hide."
+          "text": "The line between dream and truth is thinner here. What matters is that you have arrived. But know this : each floor tests not what you are, but what you hide."
         },
         {
           "character": "Cael",
@@ -71,7 +84,7 @@
         },
         {
           "character": "Keeper of Beginnings",
-          "text": "Your first trial awaits — the Sky Bridge of the Ancients. You must ride the spectral bird through the bones of a city devoured by wind and time."
+          "text": "Your first trial awaits : the Sky Bridge of the Ancients. You must ride the spectral bird through the bones of a city devoured by wind and time."
         },
         {
           "character": "Cael",
@@ -79,7 +92,7 @@
         },
         {
           "character": "Keeper of Beginnings",
-          "text": "It rarely is. But the Tower does not demand perfection — only persistence."
+          "text": "It rarely is. But the Tower does not demand perfection : only persistence."
         },
         {
           "character": "Keeper of Beginnings",
@@ -136,7 +149,7 @@
         },
         {
           "character": "Narrator",
-          "text": "The Trial of the Winds is passed — though the soul-mark glows faintly, tallying each fall into the abyss."
+          "text": "The Trial of the Winds is passed : though the soul-mark glows faintly, tallying each fall into the abyss."
         },
         {
           "character": "Cael",
@@ -148,7 +161,7 @@
         },
         {
           "character": "Narrator",
-          "text": "The spectral bird dissolves into mist. Cael lands in a narrow canyon, its floor scattered with strange, glimmering stones. The wind is gone — replaced by silence and tension."
+          "text": "The spectral bird dissolves into mist. Cael lands in a narrow canyon, its floor scattered with strange, glimmering stones. The wind is gone : replaced by silence and tension."
         },
         {
           "character": "Cael",
@@ -156,7 +169,7 @@
         },
         {
           "character": "Keeper of Beginnings",
-          "text": "These are the Mines of Memory. Beneath your feet lie shards of war — echoes of pain that never faded."
+          "text": "These are the Mines of Memory. Beneath your feet lie shards of war : echoes of pain that never faded."
         },
         {
           "character": "Keeper of Beginnings",
@@ -195,6 +208,30 @@
       "num_mines": 10,
       "victory_message": "You successfully navigated the Mines of Memory!",
       "defeat_message": "You triggered a memory trap. The Tower remembers your fall."
+    },
+    "scene_6.5": {
+      "type": "conversation",
+      "title": "Echoes of the Past",
+      "location": "valley_of_soul_shards",
+      "characters": ["Cael", "Unknown Echo"],
+      "conversation": [
+        {
+          "character": "Unknown Echo",
+          "text": "You've touched my pain... now feel my truth. The shard you carried wasn't random."
+        },
+        {
+          "character": "Cael",
+          "text": "This memory... it's not mine. But I recognize this battlefield. How?"
+        },
+        {
+          "character": "Unknown Echo",
+          "text": "The Tower connects all who've walked its halls. My defeat became your lesson. Remember this when you face the Mirror Guardian."
+        },
+        {
+          "character": "Narrator",
+          "text": "A flood of images washes over Cael - a warrior fighting shadowy figures, a fatal mistake, the moment of death. The soul-mark on Cael's arm pulses with new light."
+        }
+      ]
     },
     "scene_7": {
       "type": "text",
@@ -259,6 +296,32 @@
       "victory_message": "You solved the riddle and opened the door!",
       "defeat_message": "You failed to solve the riddle. The Tower remembers your fall."
     },
+    "scene_10.5": {
+      "type": "conversation",
+      "title": "Whispers of Sacrifice",
+      "location": "rune_gate_hall",
+      "characters": ["Guardian Spirit", "Cael"],
+      "conversation": [
+        {
+          "character": "Guardian Spirit",
+          "text": "Each puzzle solved comes at a cost. Your soul-mark grows heavier with each truth uncovered.",
+          "style": "ethereal"
+        },
+        {
+          "character": "Cael",
+          "text": "I can feel it... like chains wrapping around my heart. Why does knowledge bring pain?"
+        },
+        {
+          "character": "Guardian Spirit",
+          "text": "Because true understanding requires sacrifice. The Vault demands payment in memories. Which will you surrender?",
+          "style": "ethereal"
+        },
+        {
+          "character": "Narrator",
+          "text": "Cael's hand trembles as forgotten childhood memories flicker and fade. The rune gate seals behind them with finality."
+        }
+      ]
+    },
     "scene_11": {
       "type": "text",
       "title": "The Keeper's Farewell",
@@ -283,7 +346,7 @@
         },
         {
           "character": "Guardian Spirit",
-          "text": "Every trial is a step deeper into the truth. The puzzle was a gate — not just in stone, but in spirit.",
+          "text": "Every trial is a step deeper into the truth. The puzzle was a gate : not just in stone, but in spirit.",
           "style": "ethereal"
         },
         {
@@ -365,7 +428,7 @@
         },
         {
           "character": "Cael",
-          "text": "Next lies the Arena of Reflection — where I must face myself, not just my fears."
+          "text": "Next lies the Arena of Reflection : where I must face myself, not just my fears."
         },
         {
           "character": "Vault Echo",
@@ -387,6 +450,30 @@
         "Click to continue..."
       ]
     },
+    "scene_17.5": {
+      "type": "conversation",
+      "title": "Reflection of Truth",
+      "location": "arena_of_reflection",
+      "characters": ["Cael", "Mirror Guardian"],
+      "conversation": [
+        {
+          "character": "Mirror Guardian",
+          "text": "You stand where countless others have fallen. To pass, you must defeat what they could not - themselves."
+        },
+        {
+          "character": "Cael",
+          "text": "I see them... all the previous challengers. Their failures echo in this place."
+        },
+        {
+          "character": "Mirror Guardian",
+          "text": "Your greatest enemy has always been your doubt. Face it now, or join the echoes."
+        },
+        {
+          "character": "Narrator",
+          "text": "The arena shimmers as spectral forms emerge from the mirrors - all bearing Cael's face in different eras, each radiating despair."
+        }
+      ]
+    },
     "scene_18": {
       "type": "minigame",
       "game": "pong_game",
@@ -399,17 +486,48 @@
       "victory_message": "You cleared the lines and proved your skill!",
       "defeat_message": "You failed to clear the lines. The Tower remembers your fall."
     },
+    "scene_19.5": {
+      "type": "conversation",
+      "title": "The Core Revelation",
+      "location": "tower_heart",
+      "characters": ["Cael", "Tower Consciousness"],
+      "conversation": [
+        {
+          "character": "Tower Consciousness",
+          "text": "You've passed all trials, yet the greatest truth remains. I am not a test, but a crucible.",
+          "style": "omnipresent"
+        },
+        {
+          "character": "Cael",
+          "text": "A crucible for what? What are you forging here?"
+        },
+        {
+          "character": "Tower Consciousness",
+          "text": "Guardians. The world beyond is dying, consumed by the Silence. You are the first in centuries strong enough to face it.",
+          "style": "omnipresent"
+        },
+        {
+          "character": "Cael",
+          "text": "All this pain... just to recruit soldiers?"
+        },
+        {
+          "character": "Tower Consciousness",
+          "text": "To create beacons. The soul-mark isn't a brand - it's a weapon. Your final choice begins now: leave with your life, or stay and fight for all lives.",
+          "style": "omnipresent"
+        }
+      ]
+    },
     "scene_20": {
       "type": "minigame",
       "game": "two_guards",
-      "victory_message": "You outwitted the two guards and moved forward!",
-      "defeat_message": "The guards stopped you. The Tower remembers your failure."
+      "victory_message": "You chose your path wisely!",
+      "defeat_message": "The choice overwhelmed you. The Tower remembers your hesitation."
     },
     "scene_21": {
       "type": "minigame",
       "game": "snake_game",
-      "victory_message": "You survived the maze and mastered the shadows!",
-      "defeat_message": "You got caught in the shadows. The Tower remembers your fall."
+      "victory_message": "You mastered the shadows within!",
+      "defeat_message": "The shadows consumed you. The Tower remembers your fall."
     },
     "scene_22": {
       "type": "text",
@@ -425,32 +543,38 @@
     },
     "scene_23": {
       "type": "conversation",
-      "location": "forgotten_vault",
-      "characters": ["Narrator", "Cael", "Keeper of Beginnings"],
+      "location": "tower_heart",
+      "characters": [
+        "Narrator",
+        "Cael",
+        "Keeper of Beginnings",
+        "Tower Consciousness"
+      ],
       "conversation": [
         {
           "character": "Narrator",
-          "text": "As the dust settles in the Vault, Cael feels a profound calm wash over them."
+          "text": "Cael's soul-mark blazes with golden light as the Tower's energy flows through them. The Keeper's form begins to dissolve."
         },
         {
           "character": "Cael",
-          "text": "I came here seeking answers, but I found something far greater — myself."
+          "text": "Wait! Where are you going?"
         },
         {
           "character": "Keeper of Beginnings",
-          "text": "The Tower tests all who enter, but only those who endure find their truth."
+          "text": "My purpose is fulfilled. The Tower has chosen its new guardian. The mark is your mantle now."
+        },
+        {
+          "character": "Tower Consciousness",
+          "text": "The Silence approaches from the west. Your first test comes at dawn. Remember all you've learned - and all you've sacrificed.",
+          "style": "omnipresent"
         },
         {
           "character": "Cael",
-          "text": "Then this is not the end, but the first step of many."
-        },
-        {
-          "character": "Keeper of Beginnings",
-          "text": "Go forth, adventurer. Your story will be told in the echoes of the Tower."
+          "text": "I never wanted this power... but I'll wield it for those who can't fight."
         },
         {
           "character": "Narrator",
-          "text": "With a final glance back, Cael steps forward into the unknown, ready for whatever lies ahead."
+          "text": "As Cael steps onto the balcony, the first rays of sunlight reveal a landscape scarred by dark tendrils. The true battle begins."
         }
       ]
     },
@@ -467,7 +591,7 @@
         "Programming: bellatrixesque",
         "",
         "Special Thanks to:",
-        "— All the brave adventurers who dared to enter the Tower.",
+        ": All the brave adventurers who dared to enter the Tower.",
         "",
         "© 2025 Catastropic Game Studio"
       ]
