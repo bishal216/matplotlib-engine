@@ -25,10 +25,7 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --noconfirm --onefile ^
-            --add-data "assets;assets" ^
-            --add-data "data;data" ^
-            game.py
+          pyinstaller --noconfirm --onefile --add-data "assets;assets" --add-data "data;data" game.py
 
       - name: Package into ZIP
         run: |
