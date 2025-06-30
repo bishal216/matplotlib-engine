@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-import numpy as np
 import random
-import time
 from matplotlib.animation import FuncAnimation
 import keyboard
 

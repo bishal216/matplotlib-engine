@@ -111,7 +111,7 @@ class Game:
                 tetris_game = TetrisGame(self.fig, self.ax, width=WIDTH, height=HEIGHT)
                 tetris_game.run()
             elif minigame_name == "two_guards":
-                two_guards_game = TwoGuardsGame(self.fig, self.ax, width=WIDTH, height=HEIGHT)
+                two_guards_game = TwoGuardsGame(self.fig, self.ax)
                 two_guards_game.run()
 
 

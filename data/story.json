@@ -39,13 +39,13 @@
       "background": "assets/valley.png"
     },
     "rune_gate_hall": {
-      "background": "assets/gate.webp"
+      "background": "assets/gate.png"
     },
     "forgotten_vault": {
       "background": "assets/vault.png"
     },
     "arena_of_reflection": {
-      "background": "assets/arena_of_reflection.webp"
+      "background": "assets/arena.png"
     },
     "tower_heart": {
       "background": "assets/tower_heart.webp"
