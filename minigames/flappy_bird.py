@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-import numpy as np
 import random
 import keyboard
 from matplotlib.animation import FuncAnimation
@@ -122,4 +121,4 @@ def run_flappy_bird_game(fig, ax):
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots(figsize=(10, 8))
-    run_flappy_bird_game(fig, ax) 
+    run_flappy_bird_game(fig, ax)
