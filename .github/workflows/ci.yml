@@ -1,0 +1,155 @@
+name: Build and Release Windows ZIP
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PLUG-AND-PLAY CONFIGURATION
+# ─────────────────────────────────────────────────────────────────────────────
+# This pipeline is designed for single-file Python desktop applications
+# that use a GUI library (e.g. matplotlib, tkinter, pygame) and are
+# intended to be distributed as a standalone Windows .exe inside a ZIP.
+#
+# TO USE THIS IN YOUR PROJECT:
+#   1. Update the env vars below to match your project
+#   2. Update your .spec file to include all folders your app needs at
+#      runtime (assets, data, etc.) — this is the single source of truth
+#      for the build config
+#   3. Make sure you have a requirements.txt at the root of your repo
+#   4. Make sure you have a tests/ directory with pytest-compatible tests
+#   5. Push to main — the pipeline will lint, test, build, and release
+#
+# REQUIREMENTS:
+#   - Python project with a PyInstaller .spec file at the repo root
+#   - requirements.txt at repo root
+#   - pytest tests in a tests/ directory
+#   - GitHub repository with Actions enabled
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  # ── Project settings (update these for your project) ──────────────────────
+  PYTHON_VERSION: "3.14"      # Python version to use across all jobs
+  OUTPUT_NAME: "game"         # Must match `name=` in your .spec file
+  ZIP_NAME: "game-win.zip"    # Name of the final release ZIP file
+
+  # ── Quality gates (adjust thresholds to your project's standards) ─────────
+  MIN_COVERAGE: "60"          # Minimum test coverage % required to pass
+  MAX_LINE_LENGTH: "120"      # Max line length for flake8
+  PYLINT_THRESHOLD: "7.0"     # Minimum pylint score (out of 10) to pass
+
+  # ── Asset folders ──────────────────────────────────────────────────────────
+  # Asset folders are defined in your .spec file — edit that instead.
+  # Mirror any changes in the "Package into ZIP" step below.
+
+jobs:
+  # ─── 1. LINT ────────────────────────────────────────────────────────────────
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install linting tools
+        run: pip install flake8 pylint
+
+      - name: Run flake8
+        # Hard failure — any flake8 error will block the build
+        run: flake8 . --max-line-length=${{ env.MAX_LINE_LENGTH }} --exclude=.git,__pycache__,dist,build
+
+      - name: Run pylint
+        # Soft failure — low pylint score warns but won't block the build
+        # Change continue-on-error to false if you want strict enforcement
+        run: pylint **/*.py --fail-under=${{ env.PYLINT_THRESHOLD }}
+        continue-on-error: true
+
+  # ─── 2. FORMAT CHECK ────────────────────────────────────────────────────────
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install black
+        run: pip install black
+
+      - name: Check formatting
+        # Hard failure — run `black .` locally to auto-fix before pushing
+        run: black --check .
+
+  # ─── 3. TEST ────────────────────────────────────────────────────────────────
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run tests with coverage
+        # Fails if coverage drops below MIN_COVERAGE threshold
+        run: pytest --cov=. --cov-report=term-missing --cov-fail-under=${{ env.MIN_COVERAGE }}
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: .coverage
+
+  # ─── 4. BUILD & RELEASE ─────────────────────────────────────────────────────
+  build-and-release:
+    runs-on: windows-latest
+    needs: [ lint, format, test ]  # All jobs above must pass before building
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build executable
+        # All build config (entry point, assets, etc.) is defined in the .spec file
+        # To modify the build, edit the .spec file instead of this step
+        run: pyinstaller game.spec
+
+      - name: Package into ZIP
+        # ── ADD YOUR ASSET FOLDERS HERE ──────────────────────────────────────
+        # Mirror the folders defined in your .spec file using xcopy.
+        # Add one xcopy line per asset folder.
+        # ─────────────────────────────────────────────────────────────────────
+        run: |
+          mkdir release
+          cp dist\${{ env.OUTPUT_NAME }}.exe release\
+          xcopy /E /I /Y assets release\assets\
+          xcopy /E /I /Y data release\data\
+          powershell Compress-Archive -Path release\* -DestinationPath ${{ env.ZIP_NAME }}
+
+      - name: Upload ZIP to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.sha }}
+          name: "Latest Windows Build"
+          files: ${{ env.ZIP_NAME }}
+          prerelease: true

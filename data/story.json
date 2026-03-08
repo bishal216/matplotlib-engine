@@ -5,596 +5,710 @@
       "side": "left"
     },
     "Keeper of Beginnings": {
-      "sprite": "assets/keeper.webp",
+      "sprite": "assets/keeper.jpg",
       "side": "right"
     },
     "Narrator": {
       "side": "center"
     },
-    "Unknown Echo": {
-      "side": "right"
-    },
-    "Whispering Voice": {
-      "side": "right"
-    },
-    "Guardian Spirit": {
+    "Mira's Echo": {
       "side": "right"
     },
     "Vault Echo": {
       "side": "right"
     },
     "Mirror Guardian": {
-      "sprite": "assets/tower_guardian.gif",
+      "sprite": "assets/tower_guardian.jpg",
       "side": "center"
     },
     "Tower Consciousness": {
-      "side": "omnipresent"
+      "side": "right"
     }
   },
+
   "settings": {
     "tower": {
-      "background": "assets/tower.webp"
+      "background": "assets/tower.jpg"
     },
     "valley_of_soul_shards": {
-      "background": "assets/valley.png"
+      "background": "assets/valley.jpg"
     },
     "rune_gate_hall": {
-      "background": "assets/gate.png"
+      "background": "assets/gate.jpg"
     },
     "forgotten_vault": {
-      "background": "assets/vault.png"
+      "background": "assets/vault.jpg"
     },
     "arena_of_reflection": {
-      "background": "assets/arena.png"
+      "background": "assets/arena.jpg"
     },
     "tower_heart": {
-      "background": "assets/tower_heart.webp"
+      "background": "assets/tower_heart.jpg"
     }
   },
-  "scenes": {
-    "scene_1": {
+
+  "scenes": [
+
+    {
       "type": "conversation",
-      "title": "The Tower",
       "location": "tower",
-      "characters": ["Cael", "Keeper of Beginnings", "Narrator"],
       "conversation": [
         {
           "character": "Narrator",
-          "text": "In the heart of the Tower of Beginnings, a young adventurer named Cael awakens. Before them stands the Keeper of Beginnings : a spectral figure, face hidden beneath a shifting veil of starlight."
-        },
-        {
-          "character": "Keeper of Beginnings",
-          "text": "You heard the call... and you answered. The Tower does not summon lightly."
-        },
-        {
-          "character": "Cael",
-          "text": "I... think I dreamed of this place. But it felt more like a memory than a dream."
-        },
-        {
-          "character": "Keeper of Beginnings",
-          "text": "The line between dream and truth is thinner here. What matters is that you have arrived. But know this : each floor tests not what you are, but what you hide."
-        },
-        {
-          "character": "Cael",
-          "text": "Why was I chosen?"
-        },
-        {
-          "character": "Keeper of Beginnings",
-          "text": "You carry weight unseen, shadows you do not yet name. The Tower sees all. It listens. It judges."
-        },
-        {
-          "character": "Keeper of Beginnings",
-          "text": "Your first trial awaits : the Sky Bridge of the Ancients. You must ride the spectral bird through the bones of a city devoured by wind and time."
-        },
-        {
-          "character": "Cael",
-          "text": "That... doesn't sound survivable."
-        },
-        {
-          "character": "Keeper of Beginnings",
-          "text": "It rarely is. But the Tower does not demand perfection : only persistence."
-        },
-        {
-          "character": "Keeper of Beginnings",
-          "text": "Fall, and you will begin again. The Tower will remember. So will your soul-mark."
-        },
-        {
-          "character": "Cael",
-          "text": "...Alright. I'm ready. Let's begin."
+          "text": "Three years ago, Cael watched their village of Dawnholt burn. They ran. Everyone knows it. Cael knows it most of all."
         },
         {
           "character": "Narrator",
-          "text": "Cael steps forward as a radiant bird made of swirling light descends from the sky. Its wings stir the dust of forgotten ages. Wind roars through the shattered arches above."
+          "text": "Now they stand inside the Tower of Beginnings, cold stone beneath their boots, a spectral figure waiting in the dark ahead."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "You came. Most who carry guilt this heavy find reasons not to."
+        },
+        {
+          "character": "Cael",
+          "text": "I didn't come for redemption. I came because the dreams wouldn't stop."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The Tower calls through dreams when it has decided. You don't get to choose whether you were chosen."
+        },
+        {
+          "character": "Cael",
+          "text": "What does it want from me?"
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Not from you. Of you. There is a difference."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The Tower has seven trials. Each one will reach into you and find something you buried. The first trial is the simplest: survival."
+        },
+        {
+          "character": "Cael",
+          "text": "And if I fail?"
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "You begin again. The Tower is patient. It has been waiting for someone like you for a very long time. It can afford to wait a little longer."
+        },
+        {
+          "character": "Cael",
+          "text": "Someone like me. A coward."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Someone who survived. The Tower does not distinguish between the two yet. That is what the trials are for."
         },
         {
           "character": "Narrator",
-          "text": "The Trial of the Winds begins."
+          "text": "A mark burns itself onto the back of Cael's left hand. A small flame, barely the size of a coin. It does not hurt. That somehow makes it worse."
+        },
+        {
+          "character": "Narrator",
+          "text": "Above, the sky opens. A bird of pure wind descends, its feathers made of air and motion. The Trial of the Sky Bridge begins."
         }
       ]
     },
-    "scene_2": {
+
+    {
       "type": "text",
-      "title": "The Sky Bridge",
+      "title": "Trial One: The Sky Bridge",
       "location": "tower",
       "content": [
-        "You find yourself on a narrow bridge suspended in the sky.",
-        "The wind howls around you, and below, the ruins of an ancient city stretch out as far as the eye can see.",
+        "The spectral bird carries you out over a chasm of endless wind.",
+        "Below, the ruins of a city swallowed by clouds drift in and out of view.",
         "",
-        "A spectral bird appears, ready to take you on your journey.",
+        "The Keeper's words echo: the Tower does not demand perfection. Only persistence.",
         "",
-        "Click to continue..."
+        "You grip the bird's mane. You have run from things before.",
+        "Not this time."
       ]
     },
-    "scene_3": {
+
+    {
       "type": "minigame",
       "game": "flappy_bird",
       "score_to_beat": 10,
-      "victory_message": "You successfully navigated the Sky Bridge!",
-      "defeat_message": "You fell from the Sky Bridge. The Tower remembers your fall."
+      "victory_message": "You crossed the Sky Bridge. The flame on your hand burns a little brighter.",
+      "defeat_message": "The wind takes you. The Tower resets. The flame dims, but does not go out."
     },
-    "scene_4": {
+
+    {
       "type": "conversation",
-      "title": "The Keeper's Reflection",
       "location": "tower",
-      "characters": [
-        "Cael",
-        "Keeper of Beginnings",
-        "Unknown Echo",
-        "Narrator"
-      ],
       "conversation": [
         {
           "character": "Narrator",
-          "text": "Winds scream across the sky as Cael clings to the spectral bird. With battered wings and unyielding will, they reach the far edge of the ruined city."
-        },
-        {
-          "character": "Narrator",
-          "text": "The Trial of the Winds is passed : though the soul-mark glows faintly, tallying each fall into the abyss."
-        },
-        {
-          "character": "Cael",
-          "text": "*panting* I thought I was going to die up there... again."
-        },
-        {
-          "character": "Unknown Echo",
-          "text": "*a whisper from nowhere* And yet you didn't. That makes you dangerous."
-        },
-        {
-          "character": "Narrator",
-          "text": "The spectral bird dissolves into mist. Cael lands in a narrow canyon, its floor scattered with strange, glimmering stones. The wind is gone : replaced by silence and tension."
-        },
-        {
-          "character": "Cael",
-          "text": "What... is this place?"
+          "text": "Cael lands hard on the far side, gasping. The soul-mark on their hand pulses once, twice, then settles into a slow steady glow."
         },
         {
           "character": "Keeper of Beginnings",
-          "text": "These are the Mines of Memory. Beneath your feet lie shards of war : echoes of pain that never faded."
-        },
-        {
-          "character": "Keeper of Beginnings",
-          "text": "Step lightly. Every wrong move awakens a fragment of sorrow. To find what you seek, you must remember what was never yours."
+          "text": "The mark tallied your falls. You crossed. That is what matters."
         },
         {
           "character": "Cael",
-          "text": "So now I have to suffer someone else's past too? This Tower really doesn't care who I was before."
+          "text": "What comes next?"
         },
         {
           "character": "Keeper of Beginnings",
-          "text": "Precisely. And the deeper you go, the less of yourself you'll recognize."
+          "text": "The Mines of Memory. This trial does not test your body. It tests what you do when the past reaches up through the ground and grabs your ankle."
         },
         {
-          "character": "Narrator",
-          "text": "The air trembles with a thousand unseen voices. The mines await."
+          "character": "Cael",
+          "text": "Whose memories are down there?"
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Everyone who failed a trial they weren't ready for. Their pain crystallised into the stone. You will feel it with every wrong step."
+        },
+        {
+          "character": "Cael",
+          "text": "That's cruel."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "It is honest. Most cruelty is."
         }
       ]
     },
-    "scene_5": {
+
+    {
       "type": "text",
-      "title": "The Mines of Memory",
+      "title": "Trial Two: The Mines of Memory",
       "location": "valley_of_soul_shards",
       "content": [
-        "You step into the Mines of Memory, a dark and eerie place.",
-        "The walls are lined with strange, glowing stones that pulse with an otherworldly light.",
+        "The mines breathe.",
+        "Not wind — something slower. Like the exhalation of something ancient",
+        "that has been holding its breath for centuries.",
         "",
-        "You can feel the weight of countless memories pressing down on you.",
+        "The glowing shards beneath your feet are not stones.",
+        "They are moments. Frozen grief. Someone's worst day, crystallised.",
         "",
-        "Click to continue..."
+        "Step carefully.",
+        "Every wrong move detonates someone else's sorrow directly into your chest."
       ]
     },
-    "scene_6": {
+
+    {
       "type": "minigame",
       "game": "minesweeper",
-      "num_mines": 10,
-      "victory_message": "You successfully navigated the Mines of Memory!",
-      "defeat_message": "You triggered a memory trap. The Tower remembers your fall."
+      "num_mines": 10
     },
-    "scene_6.5": {
+
+    {
       "type": "conversation",
-      "title": "Echoes of the Past",
       "location": "valley_of_soul_shards",
-      "characters": ["Cael", "Unknown Echo"],
       "conversation": [
         {
-          "character": "Unknown Echo",
-          "text": "You've touched my pain... now feel my truth. The shard you carried wasn't random."
+          "character": "Narrator",
+          "text": "The last shard detonates before Cael can stop it. A wave of foreign grief crashes through them: the memory of a soldier named Mira, who also ran from a burning village, who also carried her guilt to the Tower, who did not make it past the third trial."
+        },
+        {
+          "character": "Mira's Echo",
+          "text": "You felt that, didn't you. The shame tastes the same in everyone's mouth."
         },
         {
           "character": "Cael",
-          "text": "This memory... it's not mine. But I recognize this battlefield. How?"
+          "text": "Who are you?"
         },
         {
-          "character": "Unknown Echo",
-          "text": "The Tower connects all who've walked its halls. My defeat became your lesson. Remember this when you face the Mirror Guardian."
+          "character": "Mira's Echo",
+          "text": "Someone who came before you. I left an echo in the mines when I failed. The Tower keeps us here as warnings. Or lessons. Depending on your perspective."
+        },
+        {
+          "character": "Cael",
+          "text": "What happened to you? At the third trial?"
+        },
+        {
+          "character": "Mira's Echo",
+          "text": "There is a guardian ahead who wears your face. She wore mine. I saw myself and I froze. Don't freeze. Whatever she says to you — she is not wrong, but she is not the whole truth either."
+        },
+        {
+          "character": "Cael",
+          "text": "Why are you helping me?"
+        },
+        {
+          "character": "Mira's Echo",
+          "text": "Because if you make it through, some part of what I carried will have meant something. Now go. The rune gate is waiting."
         },
         {
           "character": "Narrator",
-          "text": "A flood of images washes over Cael - a warrior fighting shadowy figures, a fatal mistake, the moment of death. The soul-mark on Cael's arm pulses with new light."
+          "text": "The soul-mark on Cael's hand shifts. The small flame now burns with a faint silver thread woven through it. Mira's mark, folded into Cael's own."
         }
       ]
     },
-    "scene_7": {
-      "type": "text",
-      "title": "The Keeper's Guidance",
-      "location": "valley_of_soul_shards",
-      "content": [
-        "You emerge from the Mines of Memory, shaken but alive.",
-        "The Keeper of Beginnings awaits you at the entrance.",
-        "",
-        "The spectral bird reappears, ready to take you to the next trial.",
-        "",
-        "Click to continue..."
-      ]
-    },
-    "scene_8": {
-      "type": "conversation",
-      "location": "valley_of_soul_shards",
-      "characters": ["Cael", "Whispering Voice"],
-      "conversation": [
-        {
-          "character": "Cael",
-          "text": "Those shards... they weren't just memories. I felt their pain, their fear. It's like their echoes still linger here... in the very earth."
-        },
-        {
-          "character": "Whispering Voice",
-          "text": "You carry their burden now... tread carefully, for what lies ahead is no less daunting."
-        },
-        {
-          "character": "Cael",
-          "text": "A door... guarded by riddles. If these runes are any indication, it's not just a lock on the outside... but on the inside too."
-        },
-        {
-          "character": "Whispering Voice",
-          "text": "The past and present are entwined. The puzzle is more than a test of logic. It's a test of resolve."
-        },
-        {
-          "character": "Cael",
-          "text": "I'm ready. Whatever waits beyond, I'll face it. But... I need to be sure. Doubt is the real enemy."
-        },
-        {
-          "character": "Whispering Voice",
-          "text": "Then solve the riddle... and confront the shadows within."
-        }
-      ]
-    },
-    "scene_9": {
-      "type": "text",
-      "title": "The Valley of Soul Shards",
-      "location": "valley_of_soul_shards",
-      "content": [
-        "You find yourself in a valley filled with glowing shards of light.",
-        "Each shard seems to pulse with a life of its own, whispering secrets of the past.",
-        "",
-        "A door stands before you, covered in ancient runes.",
-        "",
-        "Click to continue..."
-      ]
-    },
-    "scene_10": {
-      "type": "minigame",
-      "game": "nine_puzzle",
-      "victory_message": "You solved the riddle and opened the door!",
-      "defeat_message": "You failed to solve the riddle. The Tower remembers your fall."
-    },
-    "scene_10.5": {
-      "type": "conversation",
-      "title": "Whispers of Sacrifice",
-      "location": "rune_gate_hall",
-      "characters": ["Guardian Spirit", "Cael"],
-      "conversation": [
-        {
-          "character": "Guardian Spirit",
-          "text": "Each puzzle solved comes at a cost. Your soul-mark grows heavier with each truth uncovered.",
-          "style": "ethereal"
-        },
-        {
-          "character": "Cael",
-          "text": "I can feel it... like chains wrapping around my heart. Why does knowledge bring pain?"
-        },
-        {
-          "character": "Guardian Spirit",
-          "text": "Because true understanding requires sacrifice. The Vault demands payment in memories. Which will you surrender?",
-          "style": "ethereal"
-        },
-        {
-          "character": "Narrator",
-          "text": "Cael's hand trembles as forgotten childhood memories flicker and fade. The rune gate seals behind them with finality."
-        }
-      ]
-    },
-    "scene_11": {
-      "type": "text",
-      "title": "The Keeper's Farewell",
-      "location": "valley_of_soul_shards",
-      "content": [
-        "You step through the door and find yourself in a vast chamber filled with light.",
-        "The Keeper of Beginnings stands before you, a proud smile on their face.",
-        "",
-        "You have completed the trials of the Tower.",
-        "",
-        "Click to continue..."
-      ]
-    },
-    "scene_12": {
-      "type": "conversation",
-      "location": "rune_gate_hall",
-      "characters": ["Cael", "Guardian Spirit"],
-      "conversation": [
-        {
-          "character": "Cael",
-          "text": "The rune puzzle... it tested more than my mind. These ancient symbols seem alive, like they're watching, waiting."
-        },
-        {
-          "character": "Guardian Spirit",
-          "text": "Every trial is a step deeper into the truth. The puzzle was a gate : not just in stone, but in spirit.",
-          "style": "ethereal"
-        },
-        {
-          "character": "Cael",
-          "text": "Beyond this hall lies the Vault of Secrets... a place where knowledge and power intertwine, guarded by arcane mechanisms."
-        },
-        {
-          "character": "Guardian Spirit",
-          "text": "Within the vault, you will face a different challenge. Not of brute strength, but of cunning and will.",
-          "style": "ethereal"
-        },
-        {
-          "character": "Cael",
-          "text": "I must prepare myself. The path grows darker, but I won't falter. Every secret I uncover brings me closer to understanding who I truly am."
-        }
-      ]
-    },
-    "scene_13": {
+
+    {
       "type": "text",
       "title": "The Rune Gate Hall",
       "location": "rune_gate_hall",
       "content": [
-        "You enter the Rune Gate Hall, a vast chamber filled with ancient runes and symbols.",
-        "The air is thick with magic, and the walls seem to pulse with energy.",
+        "The gate is older than the Tower itself.",
+        "The runes carved into it are not a language — they are a question,",
+        "asked in a script that predates words.",
         "",
-        "A guardian spirit appears, ready to guide you through the next trial.",
+        "The Keeper told you nothing about this one.",
+        "Some puzzles you have to solve alone.",
         "",
-        "Click to continue..."
+        "You study the tiles. You think of Mira.",
+        "You begin."
       ]
     },
-    "scene_14": {
+
+    {
       "type": "minigame",
-      "game": "password_puzzle",
-      "password": "secrets",
-      "clues": [
-        "The first letter is the first letter of the word 'Secrets'.",
-        "The second letter is the third letter of the word 'Secrets'.",
-        "The third letter is the fifth letter of the word 'Secrets'.",
-        "The fourth letter is the last letter of the word 'Secrets'."
-      ],
-      "victory_message": "You solved the password and unlocked the Vault of Secrets!",
-      "defeat_message": "You failed to solve the password. The Vault remains sealed."
+      "game": "nine_puzzle"
     },
-    "scene_15": {
-      "type": "text",
-      "title": "The Keeper's Legacy",
-      "location": "rune_gate_hall",
-      "content": [
-        "You step into the Vault of Secrets, a place of immense power and knowledge.",
-        "The Keeper of Beginnings stands before you, their form shimmering with ethereal light.",
-        "",
-        "You have completed the trials of the Tower and proven your worth.",
-        "",
-        "Click to continue..."
-      ]
-    },
-    "scene_16": {
+
+    {
       "type": "conversation",
-      "location": "forgotten_vault",
-      "characters": ["Cael", "Vault Echo"],
+      "location": "rune_gate_hall",
       "conversation": [
         {
-          "character": "Cael",
-          "text": "The vault's password... It's more than a word. It's a memory I tried to bury."
+          "character": "Narrator",
+          "text": "The gate opens. Beyond it: a corridor of polished black stone that reflects Cael back at themselves from a dozen angles."
         },
         {
-          "character": "Vault Echo",
-          "text": "Fear once held you prisoner, Cael. Only by facing it can the path forward be revealed.",
-          "style": "mysterious"
-        },
-        {
-          "character": "Cael",
-          "text": "I can feel the weight of those failed attempts... the shame, the doubt. But I must push onward."
-        },
-        {
-          "character": "Vault Echo",
-          "text": "Beware, too much failure will seal this place forever. Your mind may yet become your own worst enemy.",
-          "style": "ominous"
+          "character": "Keeper of Beginnings",
+          "text": "You solved it without asking for help."
         },
         {
           "character": "Cael",
-          "text": "Next lies the Arena of Reflection : where I must face myself, not just my fears."
+          "text": "I had help. Just not from anyone living."
         },
         {
-          "character": "Vault Echo",
-          "text": "The duel within the mirror tests your soul and your will. Will you triumph, or be consumed?",
-          "style": "ominous"
+          "character": "Keeper of Beginnings",
+          "text": "The echo in the mines. You listened to her."
+        },
+        {
+          "character": "Cael",
+          "text": "She warned me about the guardian ahead. The one that wears my face."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The Mirror Guardian reflects the challenger's deepest doubt back at them. For you, that doubt has a name."
+        },
+        {
+          "character": "Cael",
+          "text": "Dawnholt."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The trial is not about punishing you for what you did. It is about finding out if you have decided who you are now."
+        },
+        {
+          "character": "Narrator",
+          "text": "The corridor ends at a vault door. A single word is required. Cael stares at the keyhole and thinks about Dawnholt. About the thing they never let themselves say out loud."
         }
       ]
     },
-    "scene_17": {
+
+    {
       "type": "text",
       "title": "The Forgotten Vault",
       "location": "forgotten_vault",
       "content": [
-        "You enter the Forgotten Vault, a place of ancient secrets and forgotten knowledge.",
-        "The air is thick with dust, and the walls are lined with books and scrolls.",
+        "The vault door has no lock you can pick.",
+        "It has a word.",
         "",
-        "A vault echo appears, ready to guide you through the final trial.",
+        "The Keeper said: the Tower reaches into you and finds something you buried.",
         "",
-        "Click to continue..."
+        "You buried one word deeper than all the others.",
+        "The word you never said after Dawnholt.",
+        "The word that would have made it real.",
+        "",
+        "You know what it is.",
+        "You have always known."
       ]
     },
-    "scene_17.5": {
+
+    {
+      "type": "minigame",
+      "game": "password_puzzle",
+      "password": "SORRY",
+      "clues": [
+        "It is the word you have not said since Dawnholt.",
+        "Five letters. It begins where guilt ends.",
+        "Not an excuse. Not an explanation.",
+        "Just the truth, offered up with nothing held back."
+      ],
+      "max_attempts": 7
+    },
+
+    {
       "type": "conversation",
-      "title": "Reflection of Truth",
-      "location": "arena_of_reflection",
-      "characters": ["Cael", "Mirror Guardian"],
+      "location": "forgotten_vault",
       "conversation": [
         {
-          "character": "Mirror Guardian",
-          "text": "You stand where countless others have fallen. To pass, you must defeat what they could not - themselves."
+          "character": "Narrator",
+          "text": "The vault opens. Inside: not treasure. Not weapons. Just a room full of light, and in the centre, a stone basin containing a single, still flame."
+        },
+        {
+          "character": "Vault Echo",
+          "text": "Most people guess wrong for hours. Courage. Strength. Honor. They never think it could be something so small."
         },
         {
           "character": "Cael",
-          "text": "I see them... all the previous challengers. Their failures echo in this place."
+          "text": "It doesn't feel small."
         },
         {
-          "character": "Mirror Guardian",
-          "text": "Your greatest enemy has always been your doubt. Face it now, or join the echoes."
+          "character": "Vault Echo",
+          "text": "No. It never does. That's why you buried it."
+        },
+        {
+          "character": "Vault Echo",
+          "text": "The Arena of Reflection is ahead. The Mirror Guardian has been watching since you entered the mines. She knows what you just did. She will use it."
+        },
+        {
+          "character": "Cael",
+          "text": "Good. Let her."
         },
         {
           "character": "Narrator",
-          "text": "The arena shimmers as spectral forms emerge from the mirrors - all bearing Cael's face in different eras, each radiating despair."
+          "text": "The soul-mark burns suddenly, fully, like a torch catching. The flame on Cael's hand is no longer small. It is the size of a fist and it casts real shadows."
         }
       ]
     },
-    "scene_18": {
+
+    {
+      "type": "text",
+      "title": "Trial Four: The Arena of Reflection",
+      "location": "arena_of_reflection",
+      "content": [
+        "The arena is circular. Every wall is a mirror.",
+        "In every mirror: you.",
+        "",
+        "Not the you that is standing here now.",
+        "The you from three years ago, frozen in the moment of running.",
+        "Seventeen years old. Terrified. Choosing survival over everything else.",
+        "",
+        "The Mirror Guardian steps out from the largest mirror.",
+        "She has your face.",
+        "She has Mira's eyes."
+      ]
+    },
+
+    {
+      "type": "conversation",
+      "location": "arena_of_reflection",
+      "conversation": [
+        {
+          "character": "Mirror Guardian",
+          "text": "You said sorry. Very moving. Does that bring anyone back?"
+        },
+        {
+          "character": "Cael",
+          "text": "No."
+        },
+        {
+          "character": "Mirror Guardian",
+          "text": "Then what was the point? You opened a vault door. You feel better about yourself. The people of Dawnholt are still dead."
+        },
+        {
+          "character": "Cael",
+          "text": "I know."
+        },
+        {
+          "character": "Mirror Guardian",
+          "text": "Is that all you have to say? I know?"
+        },
+        {
+          "character": "Cael",
+          "text": "What do you want me to say? That I should have died with them? Maybe. But I didn't. And I'm here now, and I'm not running."
+        },
+        {
+          "character": "Mirror Guardian",
+          "text": "You're very brave inside a Tower that won't let you actually die. Let's see how brave you are when something real is at stake."
+        },
+        {
+          "character": "Narrator",
+          "text": "The mirrors shatter. In their place: a battlefield, perfectly square, perfectly still. The Mirror Guardian raises her hand. The duel begins."
+        }
+      ]
+    },
+
+    {
       "type": "minigame",
       "game": "pong_game",
-      "victory_message": "You won the duel in the Arena of Reflection!",
-      "defeat_message": "You lost the duel. The Arena remembers your fall."
+      "victory_message": "The Guardian lowers her hand. She looks almost surprised. Almost proud.",
+      "defeat_message": "The Guardian steps back. 'Again,' she says. Not unkindly."
     },
-    "scene_19": {
-      "type": "minigame",
-      "game": "tetris_game",
-      "victory_message": "You cleared the lines and proved your skill!",
-      "defeat_message": "You failed to clear the lines. The Tower remembers your fall."
-    },
-    "scene_19.5": {
+
+    {
       "type": "conversation",
-      "title": "The Core Revelation",
-      "location": "tower_heart",
-      "characters": ["Cael", "Tower Consciousness"],
+      "location": "arena_of_reflection",
       "conversation": [
         {
-          "character": "Tower Consciousness",
-          "text": "You've passed all trials, yet the greatest truth remains. I am not a test, but a crucible.",
-          "style": "omnipresent"
+          "character": "Mirror Guardian",
+          "text": "You held the line."
         },
         {
           "character": "Cael",
-          "text": "A crucible for what? What are you forging here?"
+          "text": "I had a good teacher. She's been dead for a while, but still."
         },
         {
-          "character": "Tower Consciousness",
-          "text": "Guardians. The world beyond is dying, consumed by the Silence. You are the first in centuries strong enough to face it.",
-          "style": "omnipresent"
+          "character": "Mirror Guardian",
+          "text": "Mira's thread is in your mark now. You didn't just learn from her memory. You became a continuation of it."
         },
         {
           "character": "Cael",
-          "text": "All this pain... just to recruit soldiers?"
+          "text": "She deserved to make it through herself."
         },
         {
-          "character": "Tower Consciousness",
-          "text": "To create beacons. The soul-mark isn't a brand - it's a weapon. Your final choice begins now: leave with your life, or stay and fight for all lives.",
-          "style": "omnipresent"
+          "character": "Mirror Guardian",
+          "text": "Yes. She did. Most of the good ones do. That is why the Tower keeps trying."
+        },
+        {
+          "character": "Narrator",
+          "text": "The Mirror Guardian steps back into the largest mirror. For a moment, before she disappears, she looks like Mira. Then she is gone."
         }
       ]
     },
-    "scene_20": {
-      "type": "minigame",
-      "game": "two_guards",
-      "victory_message": "You chose your path wisely!",
-      "defeat_message": "The choice overwhelmed you. The Tower remembers your hesitation."
-    },
-    "scene_21": {
-      "type": "minigame",
-      "game": "snake_game",
-      "victory_message": "You mastered the shadows within!",
-      "defeat_message": "The shadows consumed you. The Tower remembers your fall."
-    },
-    "scene_22": {
+
+    {
       "type": "text",
-      "title": "The Final Awakening",
-      "location": "forgotten_vault",
+      "title": "Trial Five: The Unravelling",
+      "location": "arena_of_reflection",
       "content": [
-        "Having conquered the trials and faced your deepest fears, you stand at the heart of the Tower.",
-        "The shadows no longer haunt you; instead, they whisper of a new beginning.",
-        "The Tower's mysteries are yours to command.",
+        "The Tower's next trial arrives without ceremony.",
+        "A room full of falling pieces.",
+        "A ceiling that descends if you stop moving.",
         "",
-        "Your journey has only just begun."
+        "What this room finds in you is the part that panics when things fall apart.",
+        "The part that goes still at exactly the wrong moment.",
+        "",
+        "Don't go still.",
+        "Keep building.",
+        "Even when the shapes are wrong.",
+        "Even when there is no good move.",
+        "Especially then."
       ]
     },
-    "scene_23": {
+
+    {
+      "type": "minigame",
+      "game": "tetris_game",
+      "victory_message": "The ceiling stops. The room holds. So do you.",
+      "defeat_message": "The pieces overwhelm you. The room resets. The ceiling rises. Try again."
+    },
+
+    {
       "type": "conversation",
       "location": "tower_heart",
-      "characters": [
-        "Narrator",
-        "Cael",
-        "Keeper of Beginnings",
-        "Tower Consciousness"
-      ],
       "conversation": [
         {
           "character": "Narrator",
-          "text": "Cael's soul-mark blazes with golden light as the Tower's energy flows through them. The Keeper's form begins to dissolve."
-        },
-        {
-          "character": "Cael",
-          "text": "Wait! Where are you going?"
+          "text": "The final chamber is not what Cael expected. No grand hall. No throne. Just a circular room, and in its centre, the Keeper of Beginnings, sitting on the floor like someone who has been waiting for a very long time."
         },
         {
           "character": "Keeper of Beginnings",
-          "text": "My purpose is fulfilled. The Tower has chosen its new guardian. The mark is your mantle now."
-        },
-        {
-          "character": "Tower Consciousness",
-          "text": "The Silence approaches from the west. Your first test comes at dawn. Remember all you've learned - and all you've sacrificed.",
-          "style": "omnipresent"
+          "text": "Six trials. You have one left."
         },
         {
           "character": "Cael",
-          "text": "I never wanted this power... but I'll wield it for those who can't fight."
+          "text": "What is it?"
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "A choice. But first you should know what you are choosing between."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The Silence has been spreading for forty years. It does not kill. It erases. Villages, forests, memories: gone as though they never existed. Dawnholt was one of its first incursions."
+        },
+        {
+          "character": "Cael",
+          "text": "Dawnholt wasn't a fire. It was the Silence."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The fire was how it arrived that time. It wears different faces."
+        },
+        {
+          "character": "Cael",
+          "text": "I ran from something that erases things. And I've been blaming myself for three years."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "You were seventeen and you survived. That was not a moral failure. It was the point. The Tower needed you to survive."
+        },
+        {
+          "character": "Cael",
+          "text": "You could have just told me that at the beginning."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "Would you have believed it?"
         },
         {
           "character": "Narrator",
-          "text": "As Cael steps onto the balcony, the first rays of sunlight reveal a landscape scarred by dark tendrils. The true battle begins."
+          "text": "A long silence. The soul-mark on Cael's hand burns steadily, silver and gold, Mira's thread braided through their own."
+        },
+        {
+          "character": "Cael",
+          "text": "No. I wouldn't have."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "The final trial is a door. Two paths. One leads out of the Tower and back to your life. The other leads toward the Silence."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "I have been the Keeper for two hundred years. I have watched four hundred and twelve people reach this room. You are the seventh to make it this far."
+        },
+        {
+          "character": "Cael",
+          "text": "What happened to the other six?"
+        },
+        {
+          "character": "Tower Consciousness",
+          "text": "They chose the door toward the Silence. They are still out there. Fighting. They became the only thing that stands between the world and what is coming. They were not lost. They became beacons."
+        },
+        {
+          "character": "Cael",
+          "text": "Is one of them Mira?"
+        },
+        {
+          "character": "Tower Consciousness",
+          "text": "No. Mira did not reach this room. But her mark is in your hand, and your hand is here. That is the closest she will ever come."
+        },
+        {
+          "character": "Narrator",
+          "text": "Two doors appear in the far wall. One glows warm: the world, unchanged, waiting. One is dark: the unknown, and something beyond it that needs to be faced."
         }
       ]
     },
-    "scene_24": {
+
+    {
+      "type": "text",
+      "title": "Trial Six: The Choice",
+      "location": "tower_heart",
+      "content": [
+        "Two guards stand before two doors.",
+        "One tells only truth. One tells only lies.",
+        "You may ask one question.",
+        "",
+        "But you already know, don't you.",
+        "You knew the moment the Keeper said Dawnholt was the Silence.",
+        "You knew the moment you saw Mira's thread in your mark.",
+        "",
+        "The riddle is not which door leads out.",
+        "The riddle is whether you are ready to stop running."
+      ]
+    },
+
+    {
+      "type": "minigame",
+      "game": "two_guards",
+      "victory_message": "You chose the dark door. Behind you, the warm door seals. Ahead, the Silence waits. So do six beacons.",
+      "defeat_message": "The choice unmakes you for a moment. The guards wait. They are patient. Try again."
+    },
+
+    {
+      "type": "text",
+      "title": "Trial Seven: The Long Dark",
+      "location": "tower_heart",
+      "content": [
+        "One last trial before you leave the Tower.",
+        "",
+        "The Silence moves like a living thing.",
+        "It does not fight. It consumes.",
+        "It learns the shape of you and finds the gaps.",
+        "",
+        "You have faced yourself.",
+        "You have faced your past.",
+        "Now face what is coming.",
+        "",
+        "Don't let it find the gaps."
+      ]
+    },
+
+    {
+      "type": "minigame",
+      "game": "snake_game",
+      "victory_message": "The darkness finds no gaps. You are whole. The Tower's doors open.",
+      "defeat_message": "The darkness finds a gap. You seal it. You try again. The Tower waits."
+    },
+
+    {
+      "type": "conversation",
+      "location": "tower_heart",
+      "conversation": [
+        {
+          "character": "Narrator",
+          "text": "The dark door opens. Beyond it is not darkness at all: it is the world, seen from above, vast and scarred and worth saving."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "I have to go now."
+        },
+        {
+          "character": "Cael",
+          "text": "Already?"
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "My purpose was to bring someone to this room. I have done that. The Tower will have a new Keeper now."
+        },
+        {
+          "character": "Cael",
+          "text": "I don't know how to fight the Silence."
+        },
+        {
+          "character": "Keeper of Beginnings",
+          "text": "You know how to get up after falling. You know how to say the word you buried. You know how to hold the line when everything is coming at you at once. That is more than enough to begin."
+        },
+        {
+          "character": "Narrator",
+          "text": "The Keeper dissolves. Not like death: like a held breath finally released."
+        },
+        {
+          "character": "Tower Consciousness",
+          "text": "The other six know you are coming. The Silence moves west, toward the coast. You have perhaps three days."
+        },
+        {
+          "character": "Cael",
+          "text": "One last thing. Mira's echo in the mines. Is she still down there?"
+        },
+        {
+          "character": "Tower Consciousness",
+          "text": "No. When you carried her lesson through to the end, her echo was released. She is not in the mines anymore. She is in the mark. She goes where you go."
+        },
+        {
+          "character": "Cael",
+          "text": "Good."
+        },
+        {
+          "character": "Narrator",
+          "text": "Cael walks through the dark door. Below, the world waits. The soul-mark casts real light now, silver and gold, steady as a heartbeat. Somewhere to the west, six other lights are moving toward the same horizon."
+        }
+      ]
+    },
+
+    {
       "type": "text",
       "title": "Credits",
-      "location": "forgotten_vault",
+      "location": "tower_heart",
       "content": [
-        "Thank you for playing!",
+        "Thank you for playing Tower of Beginnings.",
         "",
         "Story by: bellatrixesque",
         "Game Design: bellatrixesque",
         "Art and Assets: Sora",
-        "Programming: bellatrixesque",
+        "Programming: Claude",
         "",
-        "Special Thanks to:",
-        ": All the brave adventurers who dared to enter the Tower.",
+        "In memory of all the Miras.",
+        "The ones who didn't make it through,",
+        "but made it possible for someone else to.",
         "",
-        "© 2025 Catastropic Game Studio"
+        "© 2025 Catastrophic Game Studio"
       ]
+    },
+
+    {
+      "type": "exit"
     }
-  }
+  ]
 }
