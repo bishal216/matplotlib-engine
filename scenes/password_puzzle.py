@@ -6,31 +6,33 @@ import matplotlib.patches as patches
 logger = logging.getLogger(__name__)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-PAUSE_INTERVAL  = 0.05   # seconds between event polls
-MAX_GUESS_LEN   = 16
+PAUSE_INTERVAL = 0.05  # seconds between event polls
+MAX_GUESS_LEN = 16
 DEFAULT_ATTEMPTS = 10
 
 # Colours
-BG_COLOR        = "#232946"
-ACCENT_COLOR    = "#eebbc3"
-TEXT_COLOR      = "#b8c1ec"
-INPUT_BG        = "#121629"
-WIN_COLOR       = "#2ecc71"
-LOSE_COLOR      = "#e74c3c"
+BG_COLOR = "#232946"
+ACCENT_COLOR = "#eebbc3"
+TEXT_COLOR = "#b8c1ec"
+INPUT_BG = "#121629"
+WIN_COLOR = "#2ecc71"
+LOSE_COLOR = "#e74c3c"
 
 
 class PasswordPuzzleGame:
-    def __init__(self, fig, ax, clues: list, password: str, max_attempts: int = DEFAULT_ATTEMPTS):
-        self.fig          = fig
-        self.ax           = ax
-        self.clues        = clues
-        self.password     = password.upper()
+    def __init__(
+        self, fig, ax, clues: list, password: str, max_attempts: int = DEFAULT_ATTEMPTS
+    ):
+        self.fig = fig
+        self.ax = ax
+        self.clues = clues
+        self.password = password.upper()
         self.max_attempts = max_attempts
 
         self.current_guess = ""
-        self.attempts      = 0
-        self.state         = "playing"   # "playing" | "win" | "lose"
-        self.message       = ""
+        self.attempts = 0
+        self.state = "playing"  # "playing" | "win" | "lose"
+        self.message = ""
 
         self._key_cid = self.fig.canvas.mpl_connect("key_press_event", self._handle_key)
 
@@ -48,7 +50,11 @@ class PasswordPuzzleGame:
         elif key == "enter":
             self._check_password()
 
-        elif len(key) == 1 and (key.isalpha() or key.isdigit()) and len(self.current_guess) < MAX_GUESS_LEN:
+        elif (
+            len(key) == 1
+            and (key.isalpha() or key.isdigit())
+            and len(self.current_guess) < MAX_GUESS_LEN
+        ):
             self.current_guess += key.upper()
 
         self._draw()
@@ -62,18 +68,20 @@ class PasswordPuzzleGame:
         self.attempts += 1
 
         if self.current_guess == self.password:
-            self.state   = "win"
+            self.state = "win"
             self.message = "Correct! You solved the puzzle."
             logger.debug("Password solved in %d attempts", self.attempts)
 
         elif self.attempts >= self.max_attempts:
-            self.state   = "lose"
+            self.state = "lose"
             self.message = f"Out of attempts! The password was: {self.password}"
             logger.debug("Password puzzle failed after %d attempts", self.attempts)
 
         else:
-            remaining      = self.max_attempts - self.attempts
-            self.message   = f"Incorrect! {remaining} attempt{'s' if remaining != 1 else ''} left"
+            remaining = self.max_attempts - self.attempts
+            self.message = (
+                f"Incorrect! {remaining} attempt{'s' if remaining != 1 else ''} left"
+            )
             self.current_guess = ""
 
     # ── Drawing ────────────────────────────────────────────────────────────────
@@ -92,28 +100,53 @@ class PasswordPuzzleGame:
         self._setup_axes()
 
         # Title
-        self.ax.text(5, 5.5, "Password Puzzle",
-                     fontsize=22, fontweight="bold", ha="center", color=ACCENT_COLOR)
+        self.ax.text(
+            5,
+            5.5,
+            "Password Puzzle",
+            fontsize=22,
+            fontweight="bold",
+            ha="center",
+            color=ACCENT_COLOR,
+        )
 
         # Clues
-        self.ax.text(5, 4.7, "Clues:", fontsize=14, fontweight="bold",
-                     ha="center", color=TEXT_COLOR)
+        self.ax.text(
+            5,
+            4.7,
+            "Clues:",
+            fontsize=14,
+            fontweight="bold",
+            ha="center",
+            color=TEXT_COLOR,
+        )
         for i, clue in enumerate(self.clues):
-            self.ax.text(5, 4.3 - i * 0.4, clue, fontsize=12,
-                         ha="center", color=TEXT_COLOR)
+            self.ax.text(
+                5, 4.3 - i * 0.4, clue, fontsize=12, ha="center", color=TEXT_COLOR
+            )
 
         # Attempt counter
         self.ax.text(
-            9.5, 5.7,
+            9.5,
+            5.7,
             f"{self.attempts}/{self.max_attempts}",
-            fontsize=11, ha="right", va="top", color=TEXT_COLOR,
+            fontsize=11,
+            ha="right",
+            va="top",
+            color=TEXT_COLOR,
         )
 
         # Input box
-        self.ax.add_patch(patches.Rectangle(
-            (2.5, 2.2), 5, 0.7,
-            facecolor=INPUT_BG, edgecolor=ACCENT_COLOR, linewidth=2,
-        ))
+        self.ax.add_patch(
+            patches.Rectangle(
+                (2.5, 2.2),
+                5,
+                0.7,
+                facecolor=INPUT_BG,
+                edgecolor=ACCENT_COLOR,
+                linewidth=2,
+            )
+        )
         masked = "•" * len(self.current_guess)
         self.ax.text(5, 2.55, masked, fontsize=24, ha="center", color=ACCENT_COLOR)
 
@@ -125,20 +158,28 @@ class PasswordPuzzleGame:
                 msg_color = LOSE_COLOR
             else:
                 msg_color = ACCENT_COLOR
-            self.ax.text(5, 1.5, self.message, fontsize=14,
-                         ha="center", color=msg_color)
+            self.ax.text(
+                5, 1.5, self.message, fontsize=14, ha="center", color=msg_color
+            )
 
         # Instructions
         if self.state == "playing":
             self.ax.text(
-                5, 0.8,
+                5,
+                0.8,
                 "Type your guess   Enter = Submit   Backspace = Erase",
-                fontsize=10, ha="center", color=TEXT_COLOR,
+                fontsize=10,
+                ha="center",
+                color=TEXT_COLOR,
             )
         else:
             self.ax.text(
-                5, 0.8, "Press space or click to continue",
-                fontsize=10, ha="center", color=TEXT_COLOR,
+                5,
+                0.8,
+                "Press space or click to continue",
+                fontsize=10,
+                ha="center",
+                color=TEXT_COLOR,
             )
 
         self.fig.canvas.draw_idle()
@@ -169,7 +210,7 @@ class PasswordPuzzleGame:
                 continue_flag["clicked"] = True
 
         cid_click = self.fig.canvas.mpl_connect("button_press_event", on_click)
-        cid_key   = self.fig.canvas.mpl_connect("key_press_event",   on_key)
+        cid_key = self.fig.canvas.mpl_connect("key_press_event", on_key)
 
         try:
             while not continue_flag["clicked"]:

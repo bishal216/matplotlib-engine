@@ -7,15 +7,15 @@ import matplotlib.image as mpimg
 logger = logging.getLogger(__name__)
 
 # ── Layout constants ───────────────────────────────────────────────────────────
-TITLE_Y         = 0.88
-TITLE_FONT      = 20
+TITLE_Y = 0.88
+TITLE_FONT = 20
 CONTENT_START_Y = 0.76
-CONTENT_STEP_Y  = 0.055
-CONTENT_MIN_Y   = 0.14    # lines won't render below this threshold
-CONTENT_FONT    = 12
-PROMPT_Y        = 0.05
-PROMPT_FONT     = 9
-PAUSE_INTERVAL  = 0.05    # seconds between event polls
+CONTENT_STEP_Y = 0.055
+CONTENT_MIN_Y = 0.14  # lines won't render below this threshold
+CONTENT_FONT = 12
+PROMPT_Y = 0.05
+PROMPT_FONT = 9
+PAUSE_INTERVAL = 0.05  # seconds between event polls
 
 
 def _load_image(path: str | None):
@@ -41,9 +41,9 @@ def text_scene(ax, scene: dict, settings: dict) -> None:
     ax.set_ylim(0, 1)
 
     # ── Background ─────────────────────────────────────────────────────────────
-    location_key    = scene.get("location")
+    location_key = scene.get("location")
     background_path = settings.get(location_key, {}).get("background")
-    bg              = _load_image(background_path)
+    bg = _load_image(background_path)
 
     if bg is not None:
         ax.imshow(bg, extent=[0, 1, 0, 1], aspect="auto", zorder=0)
@@ -52,9 +52,14 @@ def text_scene(ax, scene: dict, settings: dict) -> None:
     title = scene.get("title", "")
     if title:
         ax.text(
-            0.5, TITLE_Y, title,
-            fontsize=TITLE_FONT, fontweight="bold",
-            ha="center", va="center", color="white",
+            0.5,
+            TITLE_Y,
+            title,
+            fontsize=TITLE_FONT,
+            fontweight="bold",
+            ha="center",
+            va="center",
+            color="white",
             bbox=dict(facecolor="black", alpha=0.6, pad=8),
             zorder=1,
         )
@@ -66,22 +71,34 @@ def text_scene(ax, scene: dict, settings: dict) -> None:
 
         if y < CONTENT_MIN_Y:
             logger.warning(
-                "text_scene: content truncated — line %d would render below y=%.2f", i, CONTENT_MIN_Y
+                "text_scene: content truncated — line %d would render below y=%.2f",
+                i,
+                CONTENT_MIN_Y,
             )
             break
 
         ax.text(
-            0.5, y, line,
+            0.5,
+            y,
+            line,
             fontsize=CONTENT_FONT,
-            ha="center", va="center", color="white", wrap=True,
+            ha="center",
+            va="center",
+            color="white",
+            wrap=True,
             bbox=dict(facecolor="black", alpha=0.4, pad=4),
             zorder=1,
         )
 
     # ── Prompt ─────────────────────────────────────────────────────────────────
     ax.text(
-        0.5, PROMPT_Y, "Press space or click to continue...",
-        fontsize=PROMPT_FONT, ha="center", va="center", color="#cccccc",
+        0.5,
+        PROMPT_Y,
+        "Press space or click to continue...",
+        fontsize=PROMPT_FONT,
+        ha="center",
+        va="center",
+        color="#cccccc",
         zorder=1,
     )
 
@@ -98,7 +115,7 @@ def text_scene(ax, scene: dict, settings: dict) -> None:
             continue_flag["clicked"] = True
 
     cid_click = fig.canvas.mpl_connect("button_press_event", on_click)
-    cid_key   = fig.canvas.mpl_connect("key_press_event",   on_key)
+    cid_key = fig.canvas.mpl_connect("key_press_event", on_key)
 
     try:
         while not continue_flag["clicked"]:

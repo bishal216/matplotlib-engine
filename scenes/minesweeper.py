@@ -10,54 +10,60 @@ from matplotlib.animation import FuncAnimation
 logger = logging.getLogger(__name__)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-ANIM_INTERVAL  = 100    # ms between frames
-PAUSE_INTERVAL = 0.05   # seconds between event polls
+ANIM_INTERVAL = 100  # ms between frames
+PAUSE_INTERVAL = 0.05  # seconds between event polls
 
 # Cell colours
-COLOR_HIDDEN   = "gray"
+COLOR_HIDDEN = "gray"
 COLOR_REVEALED = "lightgray"
-COLOR_MINE     = "red"
-COLOR_FLAG     = "yellow"
+COLOR_MINE = "red"
+COLOR_FLAG = "yellow"
 
 # Number colours (standard Minesweeper palette)
 NUMBER_COLORS = {
-    1: "#0000ff", 2: "#008200", 3: "#ff0000", 4: "#000084",
-    5: "#840000", 6: "#008284", 7: "#840084", 8: "#757575",
+    1: "#0000ff",
+    2: "#008200",
+    3: "#ff0000",
+    4: "#000084",
+    5: "#840000",
+    6: "#008284",
+    7: "#840084",
+    8: "#757575",
 }
 
-NEIGHBORS = [(-1, -1), (-1, 0), (-1, 1),
-             ( 0, -1),          ( 0, 1),
-             ( 1, -1), ( 1, 0), ( 1, 1)]
+NEIGHBORS = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
 
 class MinesweeperGame:
     def __init__(self, fig, ax, width: int = 10, height: int = 10, num_mines: int = 15):
-        self.fig       = fig
-        self.ax        = ax
-        self.width     = width
-        self.height    = height
+        self.fig = fig
+        self.ax = ax
+        self.width = width
+        self.height = height
         self.num_mines = num_mines
 
         self._reset_state()
-        self._click_cid = self.fig.canvas.mpl_connect("button_press_event", self._on_click)
+        self._click_cid = self.fig.canvas.mpl_connect(
+            "button_press_event", self._on_click
+        )
 
     # ── State ──────────────────────────────────────────────────────────────────
 
     def _reset_state(self) -> None:
-        self.board      = np.zeros((self.height, self.width), dtype=int)
-        self.revealed   = np.zeros((self.height, self.width), dtype=bool)
-        self.flagged    = np.zeros((self.height, self.width), dtype=bool)
-        self.game_over  = False
-        self.game_won   = False
+        self.board = np.zeros((self.height, self.width), dtype=int)
+        self.revealed = np.zeros((self.height, self.width), dtype=bool)
+        self.flagged = np.zeros((self.height, self.width), dtype=bool)
+        self.game_over = False
+        self.game_won = False
         self.first_click = True
 
     # ── Mine placement ─────────────────────────────────────────────────────────
 
     def _place_mines(self, safe_x: int, safe_y: int) -> None:
         """Place mines after first click, guaranteeing the first cell is safe."""
-        all_cells    = [(x, y) for x in range(self.width) for y in range(self.height)]
+        all_cells = [(x, y) for x in range(self.width) for y in range(self.height)]
         all_cells.remove((safe_x, safe_y))
-        mine_cells   = random.sample(all_cells, self.num_mines)
+        mine_cells = random.sample(all_cells, self.num_mines)
 
         for x, y in mine_cells:
             self.board[y, x] = -1
@@ -66,7 +72,11 @@ class MinesweeperGame:
         for x, y in mine_cells:
             for dy, dx in NEIGHBORS:
                 ny, nx = y + dy, x + dx
-                if 0 <= nx < self.width and 0 <= ny < self.height and self.board[ny, nx] != -1:
+                if (
+                    0 <= nx < self.width
+                    and 0 <= ny < self.height
+                    and self.board[ny, nx] != -1
+                ):
                     self.board[ny, nx] += 1
 
         logger.debug("Mines placed — safe start: (%d, %d)", safe_x, safe_y)
@@ -147,14 +157,25 @@ class MinesweeperGame:
 
         # Title / status
         if self.game_over:
-            self.ax.set_title("GAME OVER! You hit a mine!", fontsize=16, fontweight="bold", color="red")
+            self.ax.set_title(
+                "GAME OVER! You hit a mine!",
+                fontsize=16,
+                fontweight="bold",
+                color="red",
+            )
         elif self.game_won:
-            self.ax.set_title("YOU WIN! All mines found!", fontsize=16, fontweight="bold", color="green")
+            self.ax.set_title(
+                "YOU WIN! All mines found!",
+                fontsize=16,
+                fontweight="bold",
+                color="green",
+            )
         else:
             flags_remaining = self.num_mines - int(self.flagged.sum())
             self.ax.set_title(
                 f"Minesweeper — Mines remaining: {flags_remaining}",
-                fontsize=16, fontweight="bold",
+                fontsize=16,
+                fontweight="bold",
             )
 
         # Cells
@@ -164,10 +185,12 @@ class MinesweeperGame:
 
         # Instructions overlay
         self.ax.text(
-            0.02, 0.98,
+            0.02,
+            0.98,
             "Left click: Reveal   Right click: Flag",
             transform=self.ax.transAxes,
-            fontsize=9, verticalalignment="top",
+            fontsize=9,
+            verticalalignment="top",
             bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.8),
         )
 
@@ -175,30 +198,72 @@ class MinesweeperGame:
         if self.revealed[y, x]:
             value = self.board[y, x]
             color = COLOR_MINE if value == -1 else COLOR_REVEALED
-            self.ax.add_patch(patches.Rectangle(
-                (x, y), 1, 1, facecolor=color, edgecolor="black", linewidth=1,
-            ))
+            self.ax.add_patch(
+                patches.Rectangle(
+                    (x, y),
+                    1,
+                    1,
+                    facecolor=color,
+                    edgecolor="black",
+                    linewidth=1,
+                )
+            )
             if value == -1:
-                self.ax.text(x + 0.5, y + 0.5, "*", fontsize=14, ha="center", va="center",
-                             color="white", fontweight="bold")
+                self.ax.text(
+                    x + 0.5,
+                    y + 0.5,
+                    "*",
+                    fontsize=14,
+                    ha="center",
+                    va="center",
+                    color="white",
+                    fontweight="bold",
+                )
             elif value > 0:
                 self.ax.text(
-                    x + 0.5, y + 0.5, str(value),
-                    fontsize=14, ha="center", va="center",
-                    color=NUMBER_COLORS.get(value, "black"), fontweight="bold",
+                    x + 0.5,
+                    y + 0.5,
+                    str(value),
+                    fontsize=14,
+                    ha="center",
+                    va="center",
+                    color=NUMBER_COLORS.get(value, "black"),
+                    fontweight="bold",
                 )
 
         elif self.flagged[y, x]:
-            self.ax.add_patch(patches.Rectangle(
-                (x, y), 1, 1, facecolor=COLOR_FLAG, edgecolor="black", linewidth=1,
-            ))
-            self.ax.text(x + 0.5, y + 0.5, "F", fontsize=14, ha="center", va="center",
-                         color="red", fontweight="bold")
+            self.ax.add_patch(
+                patches.Rectangle(
+                    (x, y),
+                    1,
+                    1,
+                    facecolor=COLOR_FLAG,
+                    edgecolor="black",
+                    linewidth=1,
+                )
+            )
+            self.ax.text(
+                x + 0.5,
+                y + 0.5,
+                "F",
+                fontsize=14,
+                ha="center",
+                va="center",
+                color="red",
+                fontweight="bold",
+            )
 
         else:
-            self.ax.add_patch(patches.Rectangle(
-                (x, y), 1, 1, facecolor=COLOR_HIDDEN, edgecolor="black", linewidth=1,
-            ))
+            self.ax.add_patch(
+                patches.Rectangle(
+                    (x, y),
+                    1,
+                    1,
+                    facecolor=COLOR_HIDDEN,
+                    edgecolor="black",
+                    linewidth=1,
+                )
+            )
 
     # ── Animation ──────────────────────────────────────────────────────────────
 
@@ -215,8 +280,12 @@ class MinesweeperGame:
 
     def run(self) -> bool:
         self.anim = FuncAnimation(
-            self.fig, self._update,
-            interval=ANIM_INTERVAL, blit=False, repeat=True, cache_frame_data=False,
+            self.fig,
+            self._update,
+            interval=ANIM_INTERVAL,
+            blit=False,
+            repeat=True,
+            cache_frame_data=False,
         )
 
         try:
@@ -237,7 +306,7 @@ class MinesweeperGame:
                 end_flag["clicked"] = True
 
         cid_click = self.fig.canvas.mpl_connect("button_press_event", on_click)
-        cid_key   = self.fig.canvas.mpl_connect("key_press_event",   on_key)
+        cid_key = self.fig.canvas.mpl_connect("key_press_event", on_key)
 
         try:
             while not end_flag["clicked"]:

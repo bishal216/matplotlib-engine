@@ -7,43 +7,49 @@ import matplotlib.patches as patches
 logger = logging.getLogger(__name__)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-GRID_SIZE      = 3
-PAUSE_INTERVAL = 0.05   # seconds between event polls
-SOLVED_ORDER   = np.append(np.arange(1, GRID_SIZE ** 2), 0)
+GRID_SIZE = 3
+PAUSE_INTERVAL = 0.05  # seconds between event polls
+SOLVED_ORDER = np.append(np.arange(1, GRID_SIZE**2), 0)
 
 # Colours
-BG_COLOR       = "#232946"
-TILE_COLOR     = "#eebbc3"
-TILE_TEXT      = "#232946"
-EMPTY_COLOR    = "#232946"
+BG_COLOR = "#232946"
+TILE_COLOR = "#eebbc3"
+TILE_TEXT = "#232946"
+EMPTY_COLOR = "#232946"
 
 
 class NinePuzzleGame:
     def __init__(self, fig, ax):
-        self.fig   = fig
-        self.ax    = ax
+        self.fig = fig
+        self.ax = ax
         self.moves = 0
         self.solved = False
 
         self.tiles = self._generate_solvable_tiles()
         self.empty = tuple(np.argwhere(self.tiles == 0)[0])  # (row, col)
 
-        self._click_cid = self.fig.canvas.mpl_connect("button_press_event", self._on_click)
-        self._key_cid   = self.fig.canvas.mpl_connect("key_press_event",   self._on_key)
+        self._click_cid = self.fig.canvas.mpl_connect(
+            "button_press_event", self._on_click
+        )
+        self._key_cid = self.fig.canvas.mpl_connect("key_press_event", self._on_key)
 
     # ── Puzzle generation ──────────────────────────────────────────────────────
 
     def _is_solvable(self, tiles: np.ndarray) -> bool:
         """Count inversions — puzzle is solvable iff inversion count is even."""
-        flat       = tiles[tiles != 0]
-        inversions = int(np.sum(np.fromiter(
-            (np.sum(flat[i] > flat[i + 1:]) for i in range(len(flat))),
-            dtype=int,
-        )))
+        flat = tiles[tiles != 0]
+        inversions = int(
+            np.sum(
+                np.fromiter(
+                    (np.sum(flat[i] > flat[i + 1 :]) for i in range(len(flat))),
+                    dtype=int,
+                )
+            )
+        )
         return inversions % 2 == 0
 
     def _generate_solvable_tiles(self) -> np.ndarray:
-        tiles = np.arange(GRID_SIZE ** 2)
+        tiles = np.arange(GRID_SIZE**2)
         while True:
             np.random.shuffle(tiles)
             if self._is_solvable(tiles):
@@ -56,7 +62,7 @@ class NinePuzzleGame:
             return
 
         col = int(event.xdata)
-        row = (GRID_SIZE - 1) - int(event.ydata)   # flip y → array row
+        row = (GRID_SIZE - 1) - int(event.ydata)  # flip y → array row
 
         if 0 <= row < GRID_SIZE and 0 <= col < GRID_SIZE:
             if not self.solved and self._is_adjacent_to_empty(row, col):
@@ -65,17 +71,17 @@ class NinePuzzleGame:
     def _on_key(self, event) -> None:
         # Arrow key support — move the tile adjacent to the empty space
         key_to_delta = {
-            "up":    ( 1,  0),
-            "down":  (-1,  0),
-            "left":  ( 0,  1),
-            "right": ( 0, -1),
+            "up": (1, 0),
+            "down": (-1, 0),
+            "left": (0, 1),
+            "right": (0, -1),
         }
         if event.key not in key_to_delta or self.solved:
             return
 
-        er, ec    = self.empty
-        dr, dc    = key_to_delta[event.key]
-        row, col  = er + dr, ec + dc
+        er, ec = self.empty
+        dr, dc = key_to_delta[event.key]
+        row, col = er + dr, ec + dc
 
         if 0 <= row < GRID_SIZE and 0 <= col < GRID_SIZE:
             self._move_tile(row, col)
@@ -84,13 +90,14 @@ class NinePuzzleGame:
 
     def _is_adjacent_to_empty(self, row: int, col: int) -> bool:
         er, ec = self.empty
-        return (abs(ec - col) == 1 and er == row) or \
-               (abs(er - row) == 1 and ec == col)
+        return (abs(ec - col) == 1 and er == row) or (abs(er - row) == 1 and ec == col)
 
     def _move_tile(self, row: int, col: int) -> None:
         er, ec = self.empty
-        self.tiles[er, ec], self.tiles[row, col] = \
-            self.tiles[row, col], self.tiles[er, ec]
+        self.tiles[er, ec], self.tiles[row, col] = (
+            self.tiles[row, col],
+            self.tiles[er, ec],
+        )
         self.empty = (row, col)
         self.moves += 1
         self._check_solved()
@@ -119,32 +126,53 @@ class NinePuzzleGame:
         for row in range(GRID_SIZE):
             for col in range(GRID_SIZE):
                 val = self.tiles[row, col]
-                y   = (GRID_SIZE - 1) - row   # flip row → plot y
+                y = (GRID_SIZE - 1) - row  # flip row → plot y
 
                 if val == 0:
-                    self.ax.add_patch(patches.Rectangle(
-                        (col, y), 1, 1,
-                        facecolor=EMPTY_COLOR, edgecolor="white", linewidth=2,
-                    ))
+                    self.ax.add_patch(
+                        patches.Rectangle(
+                            (col, y),
+                            1,
+                            1,
+                            facecolor=EMPTY_COLOR,
+                            edgecolor="white",
+                            linewidth=2,
+                        )
+                    )
                 else:
-                    self.ax.add_patch(patches.Rectangle(
-                        (col, y), 1, 1,
-                        facecolor=TILE_COLOR, edgecolor="black", linewidth=2,
-                    ))
+                    self.ax.add_patch(
+                        patches.Rectangle(
+                            (col, y),
+                            1,
+                            1,
+                            facecolor=TILE_COLOR,
+                            edgecolor="black",
+                            linewidth=2,
+                        )
+                    )
                     self.ax.text(
-                        col + 0.5, y + 0.5, str(val),
-                        fontsize=24, ha="center", va="center", color=TILE_TEXT,
+                        col + 0.5,
+                        y + 0.5,
+                        str(val),
+                        fontsize=24,
+                        ha="center",
+                        va="center",
+                        color=TILE_TEXT,
                     )
 
         if self.solved:
             self.ax.set_title(
                 f"PUZZLE SOLVED in {self.moves} moves!\nPress space to continue",
-                fontsize=16, fontweight="bold", color="green",
+                fontsize=16,
+                fontweight="bold",
+                color="green",
             )
         else:
             self.ax.set_title(
                 f"Nine Puzzle — Moves: {self.moves}\nClick or use arrow keys to move tiles",
-                fontsize=14, fontweight="bold", color="white",
+                fontsize=14,
+                fontweight="bold",
+                color="white",
             )
 
         self.fig.canvas.draw_idle()
@@ -174,7 +202,7 @@ class NinePuzzleGame:
                 continue_flag["clicked"] = True
 
         cid_click = self.fig.canvas.mpl_connect("button_press_event", on_click)
-        cid_key   = self.fig.canvas.mpl_connect("key_press_event",   on_key)
+        cid_key = self.fig.canvas.mpl_connect("key_press_event", on_key)
 
         try:
             while not continue_flag["clicked"]:

@@ -7,15 +7,15 @@ import matplotlib.image as mpimg
 logger = logging.getLogger(__name__)
 
 # ── Layout constants ───────────────────────────────────────────────────────────
-SPRITE_LEFT_EXTENT  = [0.05, 0.35, 0.55, 0.95]   # [x0, x1, y0, y1]
+SPRITE_LEFT_EXTENT = [0.05, 0.35, 0.55, 0.95]  # [x0, x1, y0, y1]
 SPRITE_RIGHT_EXTENT = [0.65, 0.95, 0.55, 0.95]
 
-DIM_ALPHA       = 0.3
-DIALOGUE_Y      = 0.10
-NAME_Y          = 0.95
-DIALOGUE_FONT   = 16
-NAME_FONT       = 12
-PAUSE_INTERVAL  = 0.05   # seconds between event polls
+DIM_ALPHA = 0.3
+DIALOGUE_Y = 0.10
+NAME_Y = 0.95
+DIALOGUE_FONT = 16
+NAME_FONT = 12
+PAUSE_INTERVAL = 0.05  # seconds between event polls
 
 
 def _load_image(path: str | None):
@@ -56,7 +56,7 @@ def conversation_cutscene(
         return
 
     characters = characters or {}
-    fig        = ax.figure
+    fig = ax.figure
 
     # ── Cache all assets upfront — not per line ────────────────────────────────
     bg, sprite_cache = _cache_assets(bg_img, characters)
@@ -72,16 +72,16 @@ def conversation_cutscene(
             continue_flag["clicked"] = True
 
     cid_click = fig.canvas.mpl_connect("button_press_event", on_click)
-    cid_key   = fig.canvas.mpl_connect("key_press_event",   on_key)
+    cid_key = fig.canvas.mpl_connect("key_press_event", on_key)
 
     try:
         for line in conversation:
             continue_flag["clicked"] = False
 
-            char      = line.get("character", "")
+            char = line.get("character", "")
             char_info = characters.get(char, {})
-            side      = char_info.get("side")
-            text      = line.get("text", "")
+            side = char_info.get("side")
+            text = line.get("text", "")
 
             _render_line(ax, fig, bg, sprite_cache.get(char), char, text, side)
 
@@ -111,7 +111,9 @@ def _render_line(ax, fig, bg, sprite, char: str, text: str, side: str | None) ->
     # Character sprite
     if sprite is not None and side in ("left", "right"):
         extent = SPRITE_LEFT_EXTENT if side == "left" else SPRITE_RIGHT_EXTENT
-        ax.imshow(sprite, extent=extent, aspect="auto", interpolation="bilinear", zorder=1)
+        ax.imshow(
+            sprite, extent=extent, aspect="auto", interpolation="bilinear", zorder=1
+        )
 
     # Dim the inactive side
     if side == "left":
@@ -124,18 +126,27 @@ def _render_line(ax, fig, bg, sprite, char: str, text: str, side: str | None) ->
         name_x = 0.05 if side == "left" else 0.95
         name_ha = "left" if side == "left" else "right"
         ax.text(
-            name_x, NAME_Y, char,
-            ha=name_ha, va="top",
-            fontsize=NAME_FONT, color="white", weight="bold",
+            name_x,
+            NAME_Y,
+            char,
+            ha=name_ha,
+            va="top",
+            fontsize=NAME_FONT,
+            color="white",
+            weight="bold",
             bbox=dict(facecolor="black", alpha=0.5, pad=3),
             zorder=2,
         )
 
     # Dialogue box
     ax.text(
-        0.5, DIALOGUE_Y, f"{char}: {text}",
-        ha="center", va="center",
-        fontsize=DIALOGUE_FONT, wrap=True,
+        0.5,
+        DIALOGUE_Y,
+        f"{char}: {text}",
+        ha="center",
+        va="center",
+        fontsize=DIALOGUE_FONT,
+        wrap=True,
         bbox=dict(facecolor="white", alpha=0.85, boxstyle="round,pad=0.7"),
         zorder=3,
     )

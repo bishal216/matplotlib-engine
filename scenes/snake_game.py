@@ -9,36 +9,36 @@ from matplotlib.animation import FuncAnimation
 logger = logging.getLogger(__name__)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-ANIM_INTERVAL  = 200    # ms between frames (controls snake speed)
-PAUSE_INTERVAL = 0.05   # seconds between event polls
+ANIM_INTERVAL = 200  # ms between frames (controls snake speed)
+PAUSE_INTERVAL = 0.05  # seconds between event polls
 
-FOOD_SCORE     = 10
+FOOD_SCORE = 10
 
 # Colours
-BG_COLOR       = "black"
-HEAD_COLOR     = "darkgreen"
-BODY_COLOR     = "green"
-FOOD_COLOR     = "red"
+BG_COLOR = "black"
+HEAD_COLOR = "darkgreen"
+BODY_COLOR = "green"
+FOOD_COLOR = "red"
 
 # Direction vectors
-DIR_UP    = ( 0,  1)
-DIR_DOWN  = ( 0, -1)
-DIR_LEFT  = (-1,  0)
-DIR_RIGHT = ( 1,  0)
+DIR_UP = (0, 1)
+DIR_DOWN = (0, -1)
+DIR_LEFT = (-1, 0)
+DIR_RIGHT = (1, 0)
 
 KEY_TO_DIR = {
-    "up":    DIR_UP,
-    "down":  DIR_DOWN,
-    "left":  DIR_LEFT,
+    "up": DIR_UP,
+    "down": DIR_DOWN,
+    "left": DIR_LEFT,
     "right": DIR_RIGHT,
 }
 
 
 class SnakeGame:
     def __init__(self, fig, ax, width: int = 20, height: int = 20):
-        self.fig    = fig
-        self.ax     = ax
-        self.width  = width
+        self.fig = fig
+        self.ax = ax
+        self.width = width
         self.height = height
 
         self._reset_state()
@@ -49,26 +49,22 @@ class SnakeGame:
 
     def _reset_state(self) -> None:
         start = (self.width // 2, self.height // 2)
-        self.snake      = deque([start])   # deque for O(1) head insert / tail pop
-        self.snake_set  = {start}          # set for O(1) collision lookup
-        self.direction  = DIR_RIGHT
-        self._queued_dir = DIR_RIGHT       # buffered input applied once per frame
-        self.food       = self._generate_food()
-        self.score      = 0
-        self.game_over  = False
+        self.snake = deque([start])  # deque for O(1) head insert / tail pop
+        self.snake_set = {start}  # set for O(1) collision lookup
+        self.direction = DIR_RIGHT
+        self._queued_dir = DIR_RIGHT  # buffered input applied once per frame
+        self.food = self._generate_food()
+        self.score = 0
+        self.game_over = False
 
     # ── Food ───────────────────────────────────────────────────────────────────
 
     def _generate_food(self) -> tuple:
-        all_cells = {
-            (x, y)
-            for x in range(self.width)
-            for y in range(self.height)
-        }
+        all_cells = {(x, y) for x in range(self.width) for y in range(self.height)}
         free = list(all_cells - self.snake_set)
         if not free:
             logger.warning("No free cells for food — board is full!")
-            return self.snake[-1]   # fallback: place on tail (about to vacate)
+            return self.snake[-1]  # fallback: place on tail (about to vacate)
         return random.choice(free)
 
     # ── Input ──────────────────────────────────────────────────────────────────
@@ -78,7 +74,7 @@ class SnakeGame:
         if new_dir is None or self.game_over:
             return
         # Prevent 180-degree reversal
-        if (new_dir[0] != -self.direction[0] or new_dir[1] != -self.direction[1]):
+        if new_dir[0] != -self.direction[0] or new_dir[1] != -self.direction[1]:
             self._queued_dir = new_dir
 
     # ── Game logic ─────────────────────────────────────────────────────────────
@@ -112,7 +108,7 @@ class SnakeGame:
         # Food eaten
         if new_head == self.food:
             self.score += FOOD_SCORE
-            self.food   = self._generate_food()
+            self.food = self._generate_food()
             logger.debug("Food eaten — score: %d", self.score)
             # Don't pop tail — snake grows
         else:
@@ -136,28 +132,43 @@ class SnakeGame:
 
         # Snake
         for i, segment in enumerate(self.snake):
-            self.ax.add_patch(patches.Rectangle(
-                segment, 1, 1,
-                facecolor=HEAD_COLOR if i == 0 else BODY_COLOR,
-                edgecolor="black", linewidth=1,
-            ))
+            self.ax.add_patch(
+                patches.Rectangle(
+                    segment,
+                    1,
+                    1,
+                    facecolor=HEAD_COLOR if i == 0 else BODY_COLOR,
+                    edgecolor="black",
+                    linewidth=1,
+                )
+            )
 
         # Food
-        self.ax.add_patch(patches.Rectangle(
-            self.food, 1, 1,
-            facecolor=FOOD_COLOR, edgecolor="black", linewidth=1,
-        ))
+        self.ax.add_patch(
+            patches.Rectangle(
+                self.food,
+                1,
+                1,
+                facecolor=FOOD_COLOR,
+                edgecolor="black",
+                linewidth=1,
+            )
+        )
 
         # HUD
         if self.game_over:
             self.ax.set_title(
                 f"GAME OVER!  Score: {self.score}\nPress space or click to continue",
-                fontsize=16, fontweight="bold", color="red",
+                fontsize=16,
+                fontweight="bold",
+                color="red",
             )
         else:
             self.ax.set_title(
                 f"Snake — Score: {self.score}   Arrow keys to move",
-                fontsize=14, fontweight="bold", color="white",
+                fontsize=14,
+                fontweight="bold",
+                color="white",
             )
 
     # ── Animation ──────────────────────────────────────────────────────────────
@@ -176,8 +187,12 @@ class SnakeGame:
 
     def run(self) -> int:
         self.anim = FuncAnimation(
-            self.fig, self._update,
-            interval=ANIM_INTERVAL, blit=False, repeat=True, cache_frame_data=False,
+            self.fig,
+            self._update,
+            interval=ANIM_INTERVAL,
+            blit=False,
+            repeat=True,
+            cache_frame_data=False,
         )
 
         try:
@@ -199,7 +214,7 @@ class SnakeGame:
                 continue_flag["clicked"] = True
 
         cid_click = self.fig.canvas.mpl_connect("button_press_event", on_click)
-        cid_key   = self.fig.canvas.mpl_connect("key_press_event",   on_key)
+        cid_key = self.fig.canvas.mpl_connect("key_press_event", on_key)
 
         try:
             while not continue_flag["clicked"]:

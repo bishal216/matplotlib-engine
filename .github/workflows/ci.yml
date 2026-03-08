@@ -16,9 +16,25 @@ name: Build and Release Windows ZIP
 #   4. Make sure you have a tests/ directory with pytest-compatible tests
 #   5. Push to main — the pipeline will lint, test, build, and release
 #
+# FORMATTING & LINTING:
+#   CI never modifies your code — it only validates.
+#   black --check will FAIL the build if your code isn't formatted.
+#   Always run `black .` locally before committing to avoid CI failures.
+#   Format runs before lint so that flake8 checks already-formatted code.
+#
+# LINTING CONFIGURATION:
+#   Flake8 reads its config from setup.cfg at the repo root.
+#   Edit that file to change max-line-length, ignored rules, or
+#   per-file exceptions — do not add flake8 flags to this workflow.
+#   Current setup.cfg settings:
+#     - max-line-length = 120
+#     - extend-ignore   = E221  (aligned assignments are allowed)
+#     - per-file-ignores: game.py:E402  (sys.path manipulation before imports)
+#
 # REQUIREMENTS:
 #   - Python project with a PyInstaller .spec file at the repo root
 #   - requirements.txt at repo root
+#   - setup.cfg at repo root (flake8 + pylint config)
 #   - pytest tests in a tests/ directory
 #   - GitHub repository with Actions enabled
 # ─────────────────────────────────────────────────────────────────────────────
@@ -35,7 +51,6 @@ env:
 
   # ── Quality gates (adjust thresholds to your project's standards) ─────────
   MIN_COVERAGE: "60"          # Minimum test coverage % required to pass
-  MAX_LINE_LENGTH: "120"      # Max line length for flake8
   PYLINT_THRESHOLD: "7.0"     # Minimum pylint score (out of 10) to pass
 
   # ── Asset folders ──────────────────────────────────────────────────────────
@@ -43,31 +58,10 @@ env:
   # Mirror any changes in the "Package into ZIP" step below.
 
 jobs:
-  # ─── 1. LINT ────────────────────────────────────────────────────────────────
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install linting tools
-        run: pip install flake8 pylint
-
-      - name: Run flake8
-        # Hard failure — any flake8 error will block the build
-        run: flake8 . --max-line-length=${{ env.MAX_LINE_LENGTH }} --exclude=.git,__pycache__,dist,build
-
-      - name: Run pylint
-        # Soft failure — low pylint score warns but won't block the build
-        # Change continue-on-error to false if you want strict enforcement
-        run: pylint **/*.py --fail-under=${{ env.PYLINT_THRESHOLD }}
-        continue-on-error: true
-
-  # ─── 2. FORMAT CHECK ────────────────────────────────────────────────────────
+  # ─── 1. FORMAT CHECK ────────────────────────────────────────────────────────
+  # Runs first — lint checks already-formatted code.
+  # CI only validates; it never modifies your code.
+  # Fix locally with `black .` before pushing.
   format:
     runs-on: ubuntu-latest
     steps:
@@ -82,8 +76,39 @@ jobs:
         run: pip install black
 
       - name: Check formatting
-        # Hard failure — run `black .` locally to auto-fix before pushing
+        # Hard failure — CI does not auto-fix code.
+        # Run `black .` locally before committing to avoid this failure.
         run: black --check .
+
+  # ─── 2. LINT ────────────────────────────────────────────────────────────────
+  # Runs after format so flake8 and pylint check already-formatted code.
+  lint:
+    runs-on: ubuntu-latest
+    needs: [ format ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install linting tools
+        run: pip install flake8 pylint
+
+      - name: Run flake8
+        # Hard failure — any flake8 error blocks the build.
+        # All flake8 settings (line length, ignored rules, per-file exceptions)
+        # are defined in setup.cfg at the repo root — edit that file, not this step.
+        run: flake8 .
+
+      - name: Run pylint
+        # Soft failure — low pylint score warns but won't block the build.
+        # Uses --recursive so new files/folders are picked up automatically.
+        # Excluded directories (venv, build, dist) are defined in setup.cfg.
+        # Change continue-on-error to false if you want strict enforcement.
+        run: pylint --recursive=y . --fail-under=${{ env.PYLINT_THRESHOLD }}
+        continue-on-error: true
 
   # ─── 3. TEST ────────────────────────────────────────────────────────────────
   test:
@@ -103,7 +128,7 @@ jobs:
           pip install pytest pytest-cov
 
       - name: Run tests with coverage
-        # Fails if coverage drops below MIN_COVERAGE threshold
+        # Fails if coverage drops below MIN_COVERAGE threshold.
         run: pytest --cov=. --cov-report=term-missing --cov-fail-under=${{ env.MIN_COVERAGE }}
 
       - name: Upload coverage report
@@ -115,7 +140,7 @@ jobs:
   # ─── 4. BUILD & RELEASE ─────────────────────────────────────────────────────
   build-and-release:
     runs-on: windows-latest
-    needs: [ lint, format, test ]  # All jobs above must pass before building
+    needs: [ lint, test ]  # format is already implied via lint's dependency
     steps:
       - uses: actions/checkout@v3
 
@@ -130,8 +155,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build executable
-        # All build config (entry point, assets, etc.) is defined in the .spec file
-        # To modify the build, edit the .spec file instead of this step
+        # All build config (entry point, assets, etc.) is defined in the .spec file.
+        # To modify the build, edit the .spec file instead of this step.
         run: pyinstaller game.spec
 
       - name: Package into ZIP

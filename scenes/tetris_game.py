@@ -9,29 +9,29 @@ from matplotlib.animation import FuncAnimation
 logger = logging.getLogger(__name__)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-ANIM_INTERVAL     = 50      # ms between frames
-PAUSE_INTERVAL    = 0.05    # seconds between event polls
+ANIM_INTERVAL = 50  # ms between frames
+PAUSE_INTERVAL = 0.05  # seconds between event polls
 
-DROP_FRAMES_INIT  = 20      # frames between auto-drops at start
-DROP_FRAMES_MIN   = 5       # fastest auto-drop speed
-DROP_SPEED_EVERY  = 10      # lines cleared before speeding up
+DROP_FRAMES_INIT = 20  # frames between auto-drops at start
+DROP_FRAMES_MIN = 5  # fastest auto-drop speed
+DROP_SPEED_EVERY = 10  # lines cleared before speeding up
 
-HARD_DROP_BONUS   = 2       # points per cell for hard drop
-LINE_SCORE_BASE   = 100     # multiplied by lines^2
+HARD_DROP_BONUS = 2  # points per cell for hard drop
+LINE_SCORE_BASE = 100  # multiplied by lines^2
 
 # Colours
-BG_COLOR          = "black"
-GHOST_ALPHA       = 0.25    # ghost piece opacity
+BG_COLOR = "black"
+GHOST_ALPHA = 0.25  # ghost piece opacity
 
 # Piece definitions — shape + colour stored together
 PIECES = {
-    "I": {"shape": np.array([[1, 1, 1, 1]]),             "color": "cyan"},
-    "O": {"shape": np.array([[1, 1], [1, 1]]),            "color": "yellow"},
-    "T": {"shape": np.array([[0, 1, 0], [1, 1, 1]]),      "color": "purple"},
-    "S": {"shape": np.array([[0, 1, 1], [1, 1, 0]]),      "color": "green"},
-    "Z": {"shape": np.array([[1, 1, 0], [0, 1, 1]]),      "color": "red"},
-    "J": {"shape": np.array([[1, 0, 0], [1, 1, 1]]),      "color": "blue"},
-    "L": {"shape": np.array([[0, 0, 1], [1, 1, 1]]),      "color": "orange"},
+    "I": {"shape": np.array([[1, 1, 1, 1]]), "color": "cyan"},
+    "O": {"shape": np.array([[1, 1], [1, 1]]), "color": "yellow"},
+    "T": {"shape": np.array([[0, 1, 0], [1, 1, 1]]), "color": "purple"},
+    "S": {"shape": np.array([[0, 1, 1], [1, 1, 0]]), "color": "green"},
+    "Z": {"shape": np.array([[1, 1, 0], [0, 1, 1]]), "color": "red"},
+    "J": {"shape": np.array([[1, 0, 0], [1, 1, 1]]), "color": "blue"},
+    "L": {"shape": np.array([[0, 0, 1], [1, 1, 1]]), "color": "orange"},
 }
 
 # Map colour name → index stored in board (0 = empty)
@@ -41,9 +41,9 @@ INDEX_COLOR = {v: PIECES[k]["color"] for k, v in COLOR_INDEX.items()}
 
 class TetrisGame:
     def __init__(self, fig, ax, width: int = 10, height: int = 20):
-        self.fig    = fig
-        self.ax     = ax
-        self.width  = width
+        self.fig = fig
+        self.ax = ax
+        self.width = width
         self.height = height
 
         self._reset_state()
@@ -54,28 +54,28 @@ class TetrisGame:
 
     def _reset_state(self) -> None:
         # Board stores colour index (0 = empty, 1-7 = piece colour)
-        self.board          = np.zeros((self.height, self.width), dtype=int)
-        self.score          = 0
-        self.lines_cleared  = 0
-        self.game_over      = False
+        self.board = np.zeros((self.height, self.width), dtype=int)
+        self.score = 0
+        self.lines_cleared = 0
+        self.game_over = False
         self._frame_counter = 0
-        self._drop_frames   = DROP_FRAMES_INIT
+        self._drop_frames = DROP_FRAMES_INIT
 
-        self.current_piece  = None
-        self.current_color  = None
-        self.current_x      = 0
-        self.current_y      = 0
+        self.current_piece = None
+        self.current_color = None
+        self.current_x = 0
+        self.current_y = 0
 
         self._new_piece()
 
     # ── Piece management ───────────────────────────────────────────────────────
 
     def _new_piece(self) -> None:
-        name                = random.choice(list(PIECES.keys()))
-        self.current_piece  = PIECES[name]["shape"].copy()
-        self.current_color  = name
-        self.current_x      = self.width  // 2 - self.current_piece.shape[1] // 2
-        self.current_y      = self.height - 1
+        name = random.choice(list(PIECES.keys()))
+        self.current_piece = PIECES[name]["shape"].copy()
+        self.current_color = name
+        self.current_x = self.width // 2 - self.current_piece.shape[1] // 2
+        self.current_y = self.height - 1
 
         if not self._is_valid(self.current_piece, self.current_x, self.current_y):
             self.game_over = True
@@ -105,19 +105,21 @@ class TetrisGame:
             return
 
         self.board = np.delete(self.board, full_rows, axis=0)
-        self.board = np.vstack([
-            self.board,
-            np.zeros((len(full_rows), self.width), dtype=int),
-        ])
+        self.board = np.vstack(
+            [
+                self.board,
+                np.zeros((len(full_rows), self.width), dtype=int),
+            ]
+        )
 
-        n                   = len(full_rows)
+        n = len(full_rows)
         self.lines_cleared += n
-        self.score         += n * n * LINE_SCORE_BASE
+        self.score += n * n * LINE_SCORE_BASE
         logger.debug("Cleared %d lines — score: %d", n, self.score)
 
         # Speed up every DROP_SPEED_EVERY lines
-        level              = self.lines_cleared // DROP_SPEED_EVERY
-        self._drop_frames  = max(DROP_FRAMES_MIN, DROP_FRAMES_INIT - level * 2)
+        level = self.lines_cleared // DROP_SPEED_EVERY
+        self._drop_frames = max(DROP_FRAMES_MIN, DROP_FRAMES_INIT - level * 2)
 
     # ── Ghost piece ────────────────────────────────────────────────────────────
 
@@ -139,9 +141,9 @@ class TetrisGame:
         if key == "left":
             self._move(dx=-1, dy=0)
         elif key == "right":
-            self._move(dx=1,  dy=0)
+            self._move(dx=1, dy=0)
         elif key == "down":
-            self._move(dx=0,  dy=-1)
+            self._move(dx=0, dy=-1)
         elif key == "up":
             self._rotate()
         elif key == " ":
@@ -164,7 +166,7 @@ class TetrisGame:
     def _hard_drop(self) -> None:
         while self._is_valid(self.current_piece, self.current_x, self.current_y - 1):
             self.current_y -= 1
-            self.score     += HARD_DROP_BONUS
+            self.score += HARD_DROP_BONUS
         self._land_piece()
 
     def _land_piece(self) -> None:
@@ -185,10 +187,17 @@ class TetrisGame:
         self.ax.set_yticks([])
 
     def _draw_cell(self, x: int, y: int, color: str, alpha: float = 1.0) -> None:
-        self.ax.add_patch(patches.Rectangle(
-            (x, y), 1, 1,
-            facecolor=color, edgecolor="black", linewidth=1, alpha=alpha,
-        ))
+        self.ax.add_patch(
+            patches.Rectangle(
+                (x, y),
+                1,
+                1,
+                facecolor=color,
+                edgecolor="black",
+                linewidth=1,
+                alpha=alpha,
+            )
+        )
 
     def _draw(self) -> None:
         self._setup_axes()
@@ -207,7 +216,8 @@ class TetrisGame:
                 for j in range(self.current_piece.shape[1]):
                     if self.current_piece[i, j]:
                         self._draw_cell(
-                            self.current_x + j, ghost_y - i,
+                            self.current_x + j,
+                            ghost_y - i,
                             PIECES[self.current_color]["color"],
                             alpha=GHOST_ALPHA,
                         )
@@ -224,20 +234,26 @@ class TetrisGame:
         if self.game_over:
             self.ax.set_title(
                 f"GAME OVER!  Score: {self.score}\nPress space or click to continue",
-                fontsize=16, fontweight="bold", color="red",
+                fontsize=16,
+                fontweight="bold",
+                color="red",
             )
         else:
             self.ax.set_title(
                 f"Tetris — Score: {self.score}  Lines: {self.lines_cleared}  Level: {level}",
-                fontsize=14, fontweight="bold", color="white",
+                fontsize=14,
+                fontweight="bold",
+                color="white",
             )
 
         # Instructions
         self.ax.text(
-            0.02, 0.98,
+            0.02,
+            0.98,
             "← → move   ↑ rotate   ↓ soft drop   space hard drop",
             transform=self.ax.transAxes,
-            fontsize=8, verticalalignment="top",
+            fontsize=8,
+            verticalalignment="top",
             bbox=dict(boxstyle="round", facecolor="white", alpha=0.15),
             color="white",
         )
@@ -263,8 +279,12 @@ class TetrisGame:
 
     def run(self) -> int:
         self.anim = FuncAnimation(
-            self.fig, self._update,
-            interval=ANIM_INTERVAL, blit=False, repeat=True, cache_frame_data=False,
+            self.fig,
+            self._update,
+            interval=ANIM_INTERVAL,
+            blit=False,
+            repeat=True,
+            cache_frame_data=False,
         )
 
         try:
@@ -286,7 +306,7 @@ class TetrisGame:
                 continue_flag["clicked"] = True
 
         cid_click = self.fig.canvas.mpl_connect("button_press_event", on_click)
-        cid_key   = self.fig.canvas.mpl_connect("key_press_event",   on_key)
+        cid_key = self.fig.canvas.mpl_connect("key_press_event", on_key)
 
         try:
             while not continue_flag["clicked"]:

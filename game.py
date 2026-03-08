@@ -18,8 +18,8 @@ from scenes.tetris_game import TetrisGame
 from scenes.two_guards import TwoGuardsGame
 
 # ── Constants ─────────────────────────────────────────────────────────────────
-WIDTH        = 12
-HEIGHT       = 8
+WIDTH = 12
+HEIGHT = 8
 WINDOW_TITLE = "Adventures"
 
 # ── Logging ───────────────────────────────────────────────────────────────────
@@ -29,14 +29,14 @@ logger = logging.getLogger(__name__)
 # ── Minigame registry ─────────────────────────────────────────────────────────
 # To add a new minigame: import it above, then add one line here.
 MINIGAME_REGISTRY: dict = {
-    "flappy_bird":     FlappyBirdGame,
-    "minesweeper":     MinesweeperGame,
-    "nine_puzzle":     NinePuzzleGame,
+    "flappy_bird": FlappyBirdGame,
+    "minesweeper": MinesweeperGame,
+    "nine_puzzle": NinePuzzleGame,
     "password_puzzle": PasswordPuzzleGame,
-    "pong_game":       PongGame,
-    "snake_game":      SnakeGame,
-    "tetris_game":     TetrisGame,
-    "two_guards":      TwoGuardsGame,
+    "pong_game": PongGame,
+    "snake_game": SnakeGame,
+    "tetris_game": TetrisGame,
+    "two_guards": TwoGuardsGame,
 }
 
 
@@ -44,10 +44,10 @@ class SceneManager:
     """Owns scene state and dispatch logic, keeping Game focused on lifecycle."""
 
     def __init__(self, scenes: list, characters: dict, settings: dict):
-        self.scenes     = scenes
+        self.scenes = scenes
         self.characters = characters
-        self.settings   = settings
-        self.index      = 0
+        self.settings = settings
+        self.index = 0
 
     @property
     def has_next(self) -> bool:
@@ -63,8 +63,8 @@ class SceneManager:
         scene_type = scene.get("type")
 
         if scene_type == "conversation":
-            location  = scene.get("location")
-            bg        = self.settings[location].get("background")
+            location = scene.get("location")
+            bg = self.settings[location].get("background")
             conversation_cutscene(ax, bg, scene["conversation"], self.characters)
 
         elif scene_type == "text":
@@ -83,7 +83,7 @@ class SceneManager:
 
     def _run_minigame(self, scene: dict, fig, ax) -> None:
         minigame_name = scene.get("game")
-        minigame_cls  = MINIGAME_REGISTRY.get(minigame_name)
+        minigame_cls = MINIGAME_REGISTRY.get(minigame_name)
 
         if minigame_cls is None:
             logger.error("Unknown minigame: %s — skipping", minigame_name)
@@ -95,26 +95,35 @@ class SceneManager:
         # All other games run once and return
         if minigame_name == "flappy_bird":
             target_score = scene.get("score_to_beat", 10)
-            score        = 0
+            score = 0
             while score < target_score:
-                game  = minigame_cls(
-                    fig, ax, target_score,
-                    width=WIDTH, height=HEIGHT,
+                game = minigame_cls(
+                    fig,
+                    ax,
+                    target_score,
+                    width=WIDTH,
+                    height=HEIGHT,
                     victory_message=scene.get("victory_message", "You win!"),
-                    defeat_message=scene.get("defeat_message",  "You lose!"),
+                    defeat_message=scene.get("defeat_message", "You lose!"),
                 )
                 score = game.run()
 
         elif minigame_name == "minesweeper":
             game_won = False
             while not game_won:
-                game     = minigame_cls(fig, ax, width=WIDTH, height=HEIGHT,
-                                        num_mines=scene.get("num_mines", 10))
+                game = minigame_cls(
+                    fig,
+                    ax,
+                    width=WIDTH,
+                    height=HEIGHT,
+                    num_mines=scene.get("num_mines", 10),
+                )
                 game_won = game.run()
 
         elif minigame_name == "password_puzzle":
             game = minigame_cls(
-                fig, ax,
+                fig,
+                ax,
                 scene.get("clues", []),
                 scene.get("password"),
                 max_attempts=scene.get("max_attempts", 10),
@@ -133,7 +142,7 @@ class SceneManager:
 
 class Game:
     def __init__(self):
-        self.running      = False
+        self.running = False
         self.figure_closed = False
         self.space_pressed = False
 
@@ -144,7 +153,7 @@ class Game:
 
     def _load_story(self) -> None:
         # _MEIPASS is set by PyInstaller at runtime; fall back to script dir
-        base_path  = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+        base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
         story_path = os.path.join(base_path, "data", "story.json")
 
         try:
@@ -158,8 +167,8 @@ class Game:
             sys.exit(1)
 
         characters = story.get("characters", {})
-        settings   = story.get("settings",   {})
-        scenes     = story.get("scenes",     [])
+        settings = story.get("settings", {})
+        scenes = story.get("scenes", [])
 
         # Normalise scenes — accept both list and dict formats
         if isinstance(scenes, dict):
@@ -177,14 +186,14 @@ class Game:
         self.fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
         self.fig.canvas.manager.set_window_title(WINDOW_TITLE)
 
-        self.fig.canvas.mpl_connect("close_event",     self.on_figure_close)
+        self.fig.canvas.mpl_connect("close_event", self.on_figure_close)
         self.fig.canvas.mpl_connect("key_press_event", self.on_key_press)
 
     # ── Event handlers ─────────────────────────────────────────────────────────
 
     def on_figure_close(self, event) -> None:
         self.figure_closed = True
-        self.running       = False
+        self.running = False
         try:
             plt.close("all")
         except Exception:
@@ -213,7 +222,7 @@ class Game:
             if self.is_figure_closed():
                 break
 
-            scene         = self.scene_manager.next()
+            scene = self.scene_manager.next()
             should_continue = self.scene_manager.render(scene, self.fig, self.ax)
 
             if not should_continue:
