@@ -180,4 +180,4 @@ jobs:
           tag_name: build-${{ github.sha }}
           name: "Latest Windows Build"
           files: ${{ env.ZIP_NAME }}
-          prerelease: true
+          prerelease: false
